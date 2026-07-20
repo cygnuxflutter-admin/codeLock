@@ -1,0 +1,212 @@
+[
+    {
+        "CAT_ID": "F_1504088514835950",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088515616951",
+        "SUB_NAME": "Account Number"
+    },
+    {
+        "CAT_ID": "F_1504088514835950",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504088515935998",
+        "SUB_NAME": "Branch Number"
+    },
+    {
+        "CAT_ID": "F_1504088646698269",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088647004314",
+        "SUB_NAME": "Engine Number"
+    },
+    {
+        "CAT_ID": "F_1504088646698269",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088647226887",
+        "SUB_NAME": "License Plate"
+    },
+    {
+        "CAT_ID": "F_1504088692030923",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088692371830",
+        "SUB_NAME": "User Name"
+    },
+    {
+        "CAT_ID": "F_1504088692030923",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "2",
+        "SUB_ID": "F_1504088692617484",
+        "SUB_NAME": "Password"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504088810395864",
+        "SUB_NAME": "Card Number"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "6",
+        "SUB_ID": "F_1504088810641424",
+        "SUB_NAME": "Expiry Date"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "7",
+        "SUB_ID": "F_1504088810876153",
+        "SUB_NAME": "Issue Date"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "2",
+        "SUB_ID": "F_1504088811110620",
+        "SUB_NAME": "PIN"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504088811355883",
+        "SUB_NAME": "Security Code"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088980722033",
+        "SUB_NAME": "POP3 Server"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "2",
+        "SUB_ID": "F_1504088980956656",
+        "SUB_NAME": "Password"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "2",
+        "SUB_ID": "F_1504088981191216",
+        "SUB_NAME": "SMTP Password"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088981436530",
+        "SUB_NAME": "SMTP Server"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504088981671188",
+        "SUB_NAME": "SMTP UserName"
+    },
+    {
+        "CAT_ID": "F_1504089098404917",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "6",
+        "SUB_ID": "F_1504089099257157",
+        "SUB_NAME": "Expires"
+    },
+    {
+        "CAT_ID": "F_1504089183552533",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504089183802163",
+        "SUB_NAME": "Company"
+    },
+    {
+        "CAT_ID": "F_1504089183552533",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "6",
+        "SUB_ID": "F_1504089184050698",
+        "SUB_NAME": "Expires"
+    },
+    {
+        "CAT_ID": "F_1504089183552533",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504089184274302",
+        "SUB_NAME": "Number"
+    },
+    {
+        "CAT_ID": "F_1504089248526616",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504089248823970",
+        "SUB_NAME": "User Name"
+    },
+    {
+        "CAT_ID": "F_1504089450645155",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504089450920470",
+        "SUB_NAME": "Amount"
+    },
+    {
+        "CAT_ID": "F_1504089450645155",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504089451154830",
+        "SUB_NAME": "Drug"
+    },
+    {
+        "CAT_ID": "F_1504089450645155",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "7",
+        "SUB_ID": "F_1504089451391025",
+        "SUB_NAME": "Take time"
+    },
+    {
+        "CAT_ID": "F_1504089494579229",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504089494830592",
+        "SUB_NAME": "Tax Number"
+    },
+    {
+        "CAT_ID": "F_1504089660460107",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "1",
+        "SUB_ID": "F_1504089660728341",
+        "SUB_NAME": "UserName"
+    },
+    {
+        "CAT_ID": "F_1504089660460107",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "2",
+        "SUB_ID": "F_1504089660984957",
+        "SUB_NAME": "Password"
+    },
+    {
+        "CAT_ID": "F_1504089740577283",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "6",
+        "SUB_ID": "F_1504089740876362",
+        "SUB_NAME": "Expiry Date"
+    },
+    {
+        "CAT_ID": "F_1504089740577283",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "6",
+        "SUB_ID": "F_1504089741129991",
+        "SUB_NAME": "Issue Date"
+    },
+    {
+        "CAT_ID": "F_1504089740577283",
+        "IS_MANDATORY": "0",
+        "SUB_FIELD_TYPE": "4",
+        "SUB_ID": "F_1504089741433784",
+        "SUB_NAME": "Number"
+    }
+]

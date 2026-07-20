@@ -1,0 +1,74 @@
+[
+    {
+        "CAT_ID": "F_1504088514835950",
+        "CAT_IMG": "i1",
+        "CAT_NAME": "Bank Accounts",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504088646698269",
+        "CAT_IMG": "i2",
+        "CAT_NAME": "Cars",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504088692030923",
+        "CAT_IMG": "i4",
+        "CAT_NAME": "Computer",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504088810112482",
+        "CAT_IMG": "i5",
+        "CAT_NAME": "Credit Cards",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504088980457401",
+        "CAT_IMG": "i8",
+        "CAT_NAME": "Email Accounts",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089098404917",
+        "CAT_IMG": "i8",
+        "CAT_NAME": "License",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089183552533",
+        "CAT_IMG": "i3",
+        "CAT_NAME": "Insurance",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089248526616",
+        "CAT_IMG": "i6",
+        "CAT_NAME": "Logins",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089450645155",
+        "CAT_IMG": "i6",
+        "CAT_NAME": "Prescriptions",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089494579229",
+        "CAT_IMG": "i9",
+        "CAT_NAME": "Tax",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089660460107",
+        "CAT_IMG": "i7",
+        "CAT_NAME": "Web Logins",
+        "OPENED_COUNT": "0"
+    },
+    {
+        "CAT_ID": "F_1504089740577283",
+        "CAT_IMG": "i8",
+        "CAT_NAME": "Passport",
+        "OPENED_COUNT": "0"
+    }
+]
