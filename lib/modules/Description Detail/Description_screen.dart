@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:code_lock/app_database/app_database.dart';
+import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:code_lock/modules/Home Screen/home_screen_controller.dart' hide Status;
 import 'package:code_lock/app_database/database_helper/database_helper.dart';
 import 'package:code_lock/app_routes.dart';
@@ -26,6 +27,7 @@ import 'Description_screen_controller.dart';
 class DescriptionScreen extends GetView<DescriptionScreenController> {
   DescriptionScreen({Key? key}) : super(key: key);
 
+  final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> args = Get.arguments;
 
   final AppDataBase _appDataBase = AppDataBase();
@@ -62,16 +64,15 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
           GestureDetector(
             onTap: () {
               detectOnTap();
-              if (controller.enable.value == false) {
-                controller.enable.value = true;
-              } else {
-                controller.enable.value = false;
-              }
+              controller.enable.value = !controller.enable.value;
             },
-            child: ImageIcon(
-              const AssetImage(CodeLockImages.edit),
-              color: CodeLockColor.white,
-              size: 45,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Obx(() => Icon(
+                controller.enable.value ? Icons.lock_open_rounded : Icons.lock_outline_rounded,
+                color: controller.enable.value ? CodeLockColor.green : CodeLockColor.white,
+                size: 26,
+              )),
             ),
           ),
         ],
@@ -93,27 +94,7 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
           child: SingleChildScrollView(
             child: Column(
           children: [
-            SizedBox(
-              height: 25,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Obx(
-                    () => Text(
-                      controller.enable.value == true
-                          ? CodeLockString.enable
-                          : CodeLockString.disable,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: controller.enable.value == true
-                            ? CodeLockColor.homelist
-                            : CodeLockColor.infoText,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            const SizedBox(height: 10),
             Obx(
               () {
                 // controller.titleEdit =
@@ -131,18 +112,26 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                     return Center(child: Text(CodeLockString.error));
 
                   case Status.done:
-                    return Column(
-                      children: [
-                        controller.enable.value == false && controller.titleEdit.text.isEmpty
-                            ? const SizedBox.shrink()
-                            : Info_textField(
-                                controller: controller.titleEdit,
-                                hintText: args['titleName'].toString(),
-                                keyboardType: TextInputType.text,
-                                titleText: allLanguages!.title,
-                                obscureText: false,
-                                enabled: controller.enable.value,
-                              ),
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          controller.enable.value == false && controller.titleEdit.text.isEmpty
+                              ? const SizedBox.shrink()
+                              : Info_textField(
+                                  controller: controller.titleEdit,
+                                  hintText: args['titleName'].toString(),
+                                  keyboardType: TextInputType.text,
+                                  titleText: allLanguages!.title,
+                                  obscureText: false,
+                                  enabled: controller.enable.value,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return CodeLockString.enterTitle;
+                                    }
+                                    return null;
+                                  },
+                                ),
                         controller.enable.value == false && controller.titleEdit.text.isEmpty
                             ? const SizedBox.shrink()
                             : SizedBox(height: context.getWidth * 0.03),
@@ -202,6 +191,12 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                             controller:
                                                 controller.dataIn[index].value,
                                             obscureText: true,
+                                            validator: (value) {
+                                              if (value == null || value.trim().isEmpty) {
+                                                return "ENTER ${data.subName.toString().toUpperCase()}";
+                                              }
+                                              return null;
+                                            },
                                           )
                                         : keyboardType(data.subFieldType) ==
                                                 'DatePicker'
@@ -214,6 +209,12 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                                     .dataIn[index].value,
                                                 enabled:
                                                     controller.enable.value,
+                                                validator: (value) {
+                                                  if (value == null || value.trim().isEmpty) {
+                                                    return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                  }
+                                                  return null;
+                                                },
                                               )
                                             : keyboardType(data.subFieldType) ==
                                                     'TimePicker'
@@ -226,6 +227,12 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                                         .dataIn[index].value,
                                                     enabled:
                                                         controller.enable.value,
+                                                    validator: (value) {
+                                                      if (value == null || value.trim().isEmpty) {
+                                                        return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                      }
+                                                      return null;
+                                                    },
                                                   )
                                                 : Info_textField(
                                                     enabled:
@@ -239,32 +246,23 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                                     controller: controller
                                                         .dataIn[index].value,
                                                     obscureText: false,
+                                                    validator: (value) {
+                                                      if (value == null || value.isEmpty) {
+                                                        return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                      }
+                                                      return null;
+                                                    },
                                                   );
                           },
                         ),
                         SizedBox(height: context.getWidth * 0.05),
-                        controller.enable.value == true ?
-                          CodeLockButton(
-                           buttonText: allLanguages!.saveSubValue,
-                           buttonColor: CodeLockColor.homelist,
-                           size: Size(
-                               context.getWidth * 0.9, context.getHeight * 0.05),
-                           onPressed: () async {
+                         controller.enable.value == true ?
+                          GestureDetector(
+                           onTap: () async {
                              detectOnTap();
 
-                             if (controller.titleEdit.text.trim().isEmpty) {
-                               Get.snackbar(
-                                 CodeLockString.error,
-                                 CodeLockString.enterTitle,
-                                 backgroundColor: CodeLockColor.glassBorder,
-                                 colorText: CodeLockColor.white,
-                                 snackPosition: SnackPosition.BOTTOM,
-                                 margin: const EdgeInsets.all(20),
-                               );
-                               return;
-                             }
-
-                             String titleId = args['titleId'];
+                             if (_formKey.currentState?.validate() ?? false) {
+                               String titleId = args['titleId'];
 
                              //update description table
                              List<DescriptionModel> descriptionModel =
@@ -321,11 +319,50 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                Get.find<HomeScreenController>().getCatMainData();
                                Get.find<HomeScreenController>().getTitleData();
                              }
+                             ScaffoldMessenger.of(context).showSnackBar(
+                               snackBar(
+                                 context: context,
+                                 msg: "Edited Successfully",
+                               ),
+                             );
                              Get.until((route) => route.settings.name == AppRoutes.HomeScreen);
+                             } // closes if form validate
                            },
-                         ) : const SizedBox(),
+                           child: Container(
+                             width: context.getWidth * 0.9,
+                             height: context.getHeight * 0.065,
+                             decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(16),
+                               gradient: LinearGradient(
+                                 colors: [
+                                   CodeLockColor.accentVibrant,
+                                   CodeLockColor.accentVibrant.withOpacity(0.8),
+                                 ],
+                               ),
+                               boxShadow: [
+                                 BoxShadow(
+                                   color: CodeLockColor.accentVibrant.withOpacity(0.4),
+                                   blurRadius: 15,
+                                   offset: const Offset(0, 5),
+                                 ),
+                               ],
+                             ),
+                             child: Center(
+                               child: Text(
+                                 "Save Edits",
+                                 style: const TextStyle(
+                                   color: Colors.white,
+                                   fontSize: 20,
+                                   fontWeight: FontWeight.bold,
+                                   letterSpacing: 1.0,
+                                 ),
+                               ),
+                             ),
+                           ),
+                          ) : const SizedBox(),
                          SizedBox(height: context.getWidth * 0.1),
                       ],
+                    ),
                     );
                 }
               },

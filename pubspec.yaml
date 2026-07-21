@@ -62,7 +62,7 @@ dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/AppIcon/CodeLock.png"
+  image_path: "assets/AppIcon/logo2.png"
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +95,8 @@ flutter:
     - assets/languages/
     - assets/default_data/
     - assets/AppIcon/CodeLock.png
+    - assets/AppIcon/LOGO.png
+    - assets/AppIcon/logo2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

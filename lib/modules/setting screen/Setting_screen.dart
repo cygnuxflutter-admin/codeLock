@@ -220,8 +220,8 @@ class _SettingscreenState extends State<Settingscreen> {
                       },
                       YesOnPressed: () {
                         detectOnTap();
-                        widget.settingScreenController.backUp();
-                        Get.back();
+                        Get.back(); // Close the alert dialog FIRST
+                        widget.settingScreenController.backUp(); // THEN open loading dialog
                       },
                     );
                   },

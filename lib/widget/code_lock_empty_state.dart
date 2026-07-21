@@ -7,12 +7,14 @@ class CodeLockEmptyState extends StatelessWidget {
   final String categoryName;
   final bool isHomeScreen;
   final String? imgId;
+  final VoidCallback? onAddTap;
 
   const CodeLockEmptyState({
     Key? key,
     required this.categoryName,
     this.isHomeScreen = false,
     this.imgId,
+    this.onAddTap,
   }) : super(key: key);
 
   EmptyStateDetails _getDetails() {
@@ -21,7 +23,7 @@ class CodeLockEmptyState extends StatelessWidget {
         Icons.folder_open_outlined,
         'No Categories Added',
         'Create categories to organize your secure data.',
-        'Tap the + button above to add your first category.',
+        'Tap the + button below to add your first category.',
       );
     }
     
@@ -32,56 +34,56 @@ class CodeLockEmptyState extends StatelessWidget {
         Icons.flight_takeoff_outlined,
         'No Passport Added',
         'Keep your passport details safe and organized.',
-        'Tap the + button above to add your first passport.',
+        'Tap the + button below to add your first passport.',
       );
     } else if (lower.contains('bank')) {
       return EmptyStateDetails(
         Icons.account_balance_outlined,
         'No Bank Accounts',
         'Securely save your bank account information.',
-        'Tap the + button above to add your first bank account.',
+        'Tap the + button below to add your first bank account.',
       );
     } else if (lower.contains('tax')) {
       return EmptyStateDetails(
         Icons.receipt_long_outlined,
         'No Tax Records',
         'Store your tax information securely.',
-        'Tap the + button above to add your first tax record.',
+        'Tap the + button below to add your first tax record.',
       );
     } else if (lower.contains('email')) {
       return EmptyStateDetails(
         Icons.email_outlined,
         'No Email Accounts',
         'Keep your email account details organized.',
-        'Tap the + button above to add your first email account.',
+        'Tap the + button below to add your first email account.',
       );
     } else if (lower.contains('car')) {
       return EmptyStateDetails(
         Icons.directions_car_outlined,
         'No Cars Added',
         'Manage your vehicle information securely.',
-        'Tap the + button above to add your first vehicle.',
+        'Tap the + button below to add your first vehicle.',
       );
     } else if (lower.contains('computer')) {
       return EmptyStateDetails(
         Icons.computer_outlined,
         'No Computer Records',
         'Store your computer details safely.',
-        'Tap the + button above to add your first computer.',
+        'Tap the + button below to add your first computer.',
       );
     } else if (lower.contains('license')) {
       return EmptyStateDetails(
         Icons.badge_outlined,
         'No License Added',
         'Keep your license information secure.',
-        'Tap the + button above to add your first license.',
+        'Tap the + button below to add your first license.',
       );
     } else if (lower.contains('certificate')) {
       return EmptyStateDetails(
         Icons.card_membership_outlined,
         'No Certificates Added',
         'Store your certificates securely.',
-        'Tap the + button above to add your first certificate.',
+        'Tap the + button below to add your first certificate.',
       );
     }
     
@@ -90,7 +92,7 @@ class CodeLockEmptyState extends StatelessWidget {
       Icons.folder_open_outlined,
       'No Data Added',
       'Store and manage your secure information.',
-      'Tap the + button above to add your first entry.',
+      'Tap the + button below to add your first entry.',
     );
   }
 
@@ -161,15 +163,31 @@ class CodeLockEmptyState extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
-                details.instruction,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: CodeLockColor.white.withValues(alpha: 0.55),
-                  fontSize: 15,
-                  height: 1.4,
+              if (onAddTap != null)
+                ElevatedButton.icon(
+                  onPressed: onAddTap,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: CodeLockColor.accentVibrant,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                  icon: const Icon(Icons.add, size: 24),
+                  label: Text(
+                    isHomeScreen ? "Add Category" : "Add ${categoryName.replaceAll(RegExp(r's$'), '')}",
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                )
+              else
+                Text(
+                  details.instruction,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: CodeLockColor.white.withValues(alpha: 0.55),
+                    fontSize: 15,
+                    height: 1.4,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

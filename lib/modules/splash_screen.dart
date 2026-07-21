@@ -47,23 +47,63 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         child: Center(
-          child: Container(
-            height: context.getHeight * 0.18,
-            width: context.getWidth * 0.7,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: CodeLockColor.accentVibrant.withOpacity(0.2),
-                  blurRadius: 50,
-                  spreadRadius: 15,
-                  offset: const Offset(0, 0),
-                )
-              ],
-              image: const DecorationImage(
-                image: AssetImage(CodeLockImages.NameLogo),
-                fit: BoxFit.contain,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: CodeLockColor.accentVibrant.withOpacity(0.4),
+                      blurRadius: 60,
+                      spreadRadius: 10,
+                      offset: const Offset(0, 0),
+                    )
+                  ],
+                  image: const DecorationImage(
+                    image: AssetImage(CodeLockImages.Logo2),
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 32),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "code",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                        color: CodeLockColor.white,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Lock",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                        color: CodeLockColor.accentVibrant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                "Secure. Private. Always.",
+                style: TextStyle(
+                  color: CodeLockColor.white.withOpacity(0.5),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -25,6 +25,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
+
   });
   Future.delayed(const Duration(seconds: 10), () {
     /// DriveBackup().signInToGoogle();

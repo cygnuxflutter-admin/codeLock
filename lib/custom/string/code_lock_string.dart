@@ -1,6 +1,6 @@
 class CodeLockString {
   static const String codeLock = "CodeLock";
-  static const String abc = "123";
+  static const String abc = "🔢  Number";
   static const String addValue = "Add Value";
   static String pas = "";
   static String pas2 = "";

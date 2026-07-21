@@ -27,7 +27,9 @@ class CodeLockImages {
 //images folder
 
   static const String backGround = 'assets/Icons/Images/2X copy.png';
-  static const String NameLogo = 'assets/Icons/Images/1024copy.png';
+  static const String NameLogo = 'assets/AppIcon/LOGO.png';
+  static const String Logo2 = 'assets/AppIcon/logo2.png';
+  static const String OldNameLogo = 'assets/Icons/Images/1024copy.png';
   static const String backG = 'assets/Icons/Images/background-1.png';
   static const String names = 'assets/Icons/Images/nameeee copy.png';
 

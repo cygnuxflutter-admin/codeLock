@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:code_lock/app_database/app_database.dart';
+import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:code_lock/app_database/database_helper/database_helper.dart';
 import 'package:code_lock/app_routes.dart';
 import 'package:code_lock/custom/Image/code_lock_image.dart';
@@ -36,6 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Allow gradient behind AppBar
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          detectOnTap();
+          Get.toNamed(AppRoutes.FieldScreen);
+        },
+        backgroundColor: CodeLockColor.accentVibrant,
+        child: const Icon(Icons.add, size: 30, color: Colors.white),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -64,26 +73,15 @@ class _HomeScreenState extends State<HomeScreen> {
           color: CodeLockColor.white,
         ),
         actions: [
-          GestureDetector(
-            onTap: () {
-              detectOnTap();
-              Get.toNamed(AppRoutes.SettingScreen);
-            },
-            child: ImageIcon(
-              const AssetImage(CodeLockImages.setting), 
-              size: 38,
-              color: CodeLockColor.white,
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.only(left: 18, right: 15),
+            padding: const EdgeInsets.only(right: 15),
             child: GestureDetector(
               onTap: () {
                 detectOnTap();
-                Get.toNamed(AppRoutes.FieldScreen);
+                Get.toNamed(AppRoutes.SettingScreen);
               },
               child: ImageIcon(
-                const AssetImage(CodeLockImages.add), 
+                const AssetImage(CodeLockImages.setting), 
                 size: 38,
                 color: CodeLockColor.white,
               ),
@@ -159,6 +157,7 @@ class CatMainTableData extends GetView<HomeScreenController> {
                   }
 
                   return ListView.separated(
+                    padding: const EdgeInsets.only(bottom: 90), // Prevent FAB from hiding last item
                     itemCount: catMainList.length,
                     physics: const BouncingScrollPhysics(),
                     separatorBuilder: (BuildContext context, int index) =>
@@ -177,14 +176,14 @@ class CatMainTableData extends GetView<HomeScreenController> {
                               performsFirstActionWithFullSwipe: false,
                               widthSpace: 92,
                               color: const Color(0xFFFF4D4F),
-                                content: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.delete_outline_rounded, color: Colors.white, size: 28),
-                                    SizedBox(height: 4),
-                                    Text("Delete", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.delete_outline_rounded, color: Colors.white, size: 28),
+                                  const SizedBox(height: 4),
+                                  Text(allLanguages!.delete, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+                                ],
+                              ),
                               onTap: (handler) async {
                                 detectOnTap();
                                 HapticFeedback.lightImpact();
@@ -233,7 +232,7 @@ class CatMainTableData extends GetView<HomeScreenController> {
                                               side: const BorderSide(color: Color(0xFF334155)),
                                             ),
                                           ),
-                                          child: const Text("Cancel", style: TextStyle(color: Colors.white)),
+                                          child: Text(allLanguages!.cancel, style: const TextStyle(color: Colors.white)),
                                         ),
                                         ElevatedButton(
                                           onPressed: () async {
@@ -246,6 +245,12 @@ class CatMainTableData extends GetView<HomeScreenController> {
                                               await _appDataBase.deleteDatabase(catIdToDelete, Tables.descriptions);
                                               controller.getCatMainData();
                                               controller.getTitleData();
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                snackBar(
+                                                  context: context,
+                                                  msg: "Deleted Successfully",
+                                                ),
+                                              );
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -253,7 +258,7 @@ class CatMainTableData extends GetView<HomeScreenController> {
                                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                           ),
-                                          child: const Text("Delete", style: TextStyle(color: Colors.white)),
+                                          child: Text(allLanguages!.delete, style: const TextStyle(color: Colors.white)),
                                         ),
                                       ],
                                     );

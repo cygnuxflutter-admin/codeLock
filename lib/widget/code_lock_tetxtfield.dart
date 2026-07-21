@@ -41,11 +41,21 @@ class codeLockTextfield extends StatefulWidget {
 
 class _codeLockTextfieldState extends State<codeLockTextfield> {
   bool _obscureText = false;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
+    _focusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,30 +77,25 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                     color: CodeLockColor.glassBg,
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.glassBorder,
-                      width: state.hasError ? 1.5 : 1.2,
+                      color: state.hasError 
+                          ? const Color(0xFFFF6B6B) 
+                          : (_focusNode.hasFocus ? CodeLockColor.accentVibrant : CodeLockColor.glassBorder),
+                      width: state.hasError || _focusNode.hasFocus ? 1.5 : 1.2,
                     ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.accentVibrant,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(18),
-                              bottomLeft: Radius.circular(18)),
-                        ),
-                        width: 4.5,
-                        ),
                       if (widget.prefixWidget != null) ...[
+                        SizedBox(width: context.getWidth * 0.02),
                         widget.prefixWidget!,
                       ] else ...[
                         SizedBox(width: context.getWidth * 0.04),
                       ],
                       Expanded(
                         child: TextField(
+                          focusNode: _focusNode,
                           textAlignVertical: TextAlignVertical.center,
                           controller: widget.controller,
                           keyboardType: widget.keyboardType,

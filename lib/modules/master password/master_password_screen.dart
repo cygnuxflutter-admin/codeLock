@@ -40,8 +40,8 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
               SizedBox(height: context.getHeight * 0.12),
               // Logo with soft glow
               Container(
-                height: context.getHeight * 0.14,
-                width: context.getWidth * 0.6,
+                height: context.getHeight * 0.16,
+                width: context.getWidth * 0.7,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -52,7 +52,7 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                     )
                   ],
                   image: const DecorationImage(
-                    image: AssetImage(CodeLockImages.NameLogo),
+                    image: AssetImage(CodeLockImages.OldNameLogo),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -79,21 +79,29 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                       child: Column(
                         children: [
                           if (LocalData.getIsPass == true) ...[
-                            Text(
-                              "Welcome Back",
-                              style: TextStyle(
-                                color: CodeLockColor.white,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.2,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                allLanguages!.welcomeBack,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: CodeLockColor.white,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Text(
-                              "Enter your password to continue",
-                              style: TextStyle(
-                                color: CodeLockColor.white.withOpacity(0.6),
-                                fontSize: 14,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                allLanguages!.enterYourPasswordToContinue,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: CodeLockColor.white.withOpacity(0.6),
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 40),
@@ -112,7 +120,7 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                             const SizedBox(height: 40),
                             _buildModernButton(
                               context,
-                              text: allLanguages!.signIn,
+                              text: "Unlock",
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 controller.passwordToast(context);
@@ -120,21 +128,29 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                             )
                           ],
                           if (LocalData.getIsPass == false) ...[
-                            Text(
-                              "Enter Passcode",
-                              style: TextStyle(
-                                color: CodeLockColor.white,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.2,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                allLanguages!.plzenterpasscode,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: CodeLockColor.white,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Text(
-                              "Secure your data",
-                              style: TextStyle(
-                                color: CodeLockColor.white.withOpacity(0.6),
-                                fontSize: 14,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                allLanguages!.secureYourData,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: CodeLockColor.white.withOpacity(0.6),
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 40),
@@ -146,6 +162,7 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                                 fieldWidth: 50,
                                 fieldStyle: FieldStyle.box,
                                 outlineBorderRadius: 15,
+                                obscureText: true,
                                 style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
                                 otpFieldStyle: OtpFieldStyle(
                                   disabledBorderColor: CodeLockColor.glassBorder,
@@ -165,7 +182,7 @@ class MasterPassword extends GetView<MasterPasswordScreenController> {
                             const SizedBox(height: 40),
                             _buildModernButton(
                               context,
-                              text: allLanguages!.signIn,
+                              text: "Unlock",
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 controller.passCodeToast(context);

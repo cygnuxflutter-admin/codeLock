@@ -1,4 +1,5 @@
 import 'package:code_lock/app_database/app_database.dart';
+import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:code_lock/modules/Home Screen/home_screen_controller.dart' hide Status;
 import 'package:code_lock/app_database/database_helper/database_helper.dart';
 import 'package:code_lock/app_routes.dart';
@@ -72,7 +73,7 @@ class InformationScreen extends GetView<InformationScreenController> {
                   side: const BorderSide(color: Color(0xFF334155)),
                 ),
               ),
-              child: const Text("Cancel", style: TextStyle(color: Colors.white)),
+              child: Text(allLanguages!.cancel, style: const TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -86,6 +87,12 @@ class InformationScreen extends GetView<InformationScreenController> {
                     Get.find<HomeScreenController>().getTitleData();
                   }
                   controller.getTitleData();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    snackBar(
+                      context: context,
+                      msg: "Deleted Successfully",
+                    ),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -93,158 +100,9 @@ class InformationScreen extends GetView<InformationScreenController> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
-              child: const Text("Delete", style: TextStyle(color: Colors.white)),
+              child: Text(allLanguages!.delete, style: const TextStyle(color: Colors.white)),
             ),
           ],
-        );
-      },
-    );
-  }
-
-  void _showMoreBottomSheet(BuildContext context, TitleModel data) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (BuildContext sheetContext) {
-        return Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF1B1F2A),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-            border: Border(
-              top: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1),
-              left: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1),
-              right: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.4),
-                blurRadius: 20,
-                offset: const Offset(0, -5),
-              )
-            ]
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Header
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: CodeLockColor.accentVibrant,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: const Icon(
-                          Icons.description_outlined, // Generic icon for info item
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Text(
-                          data.titleName ?? "Item",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                
-                Divider(color: Colors.white.withValues(alpha: 0.1), height: 1, thickness: 1),
-                
-                // Edit
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(sheetContext);
-                      Get.toNamed(
-                        AppRoutes.DescriptionScreen,
-                        arguments: {
-                          'titleId': data.titleId,
-                          'titleName': data.titleName
-                        },
-                      );
-                    },
-                    splashColor: CodeLockColor.accentVibrant.withValues(alpha: 0.3),
-                    highlightColor: CodeLockColor.accentVibrant.withValues(alpha: 0.1),
-                    child: Container(
-                      constraints: const BoxConstraints(minHeight: 56),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.edit_outlined, color: Colors.white, size: 24),
-                          SizedBox(width: 16),
-                          Text("Edit", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                
-                Divider(color: Colors.white.withValues(alpha: 0.1), height: 1, thickness: 1),
-                
-                // Delete
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(sheetContext);
-                      _showDeleteConfirmationDialog(context, data);
-                    },
-                    splashColor: const Color(0xFFFF4D57).withValues(alpha: 0.3),
-                    highlightColor: const Color(0xFFFF4D57).withValues(alpha: 0.1),
-                    child: Container(
-                      constraints: const BoxConstraints(minHeight: 56),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.delete_outline_rounded, color: const Color(0xFFFF4D57), size: 24),
-                          SizedBox(width: 16),
-                          Text("Delete", style: TextStyle(color: Color(0xFFFF4D57), fontSize: 16, fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                
-                Divider(color: Colors.white.withValues(alpha: 0.1), height: 1, thickness: 1),
-                
-                // Cancel
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(sheetContext);
-                    },
-                    splashColor: const Color(0xFF9AA0AC).withValues(alpha: 0.2),
-                    highlightColor: const Color(0xFF9AA0AC).withValues(alpha: 0.1),
-                    child: Container(
-                      constraints: const BoxConstraints(minHeight: 56),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.close_rounded, color: const Color(0xFF9AA0AC), size: 24),
-                          SizedBox(width: 16),
-                          Text("Cancel", style: TextStyle(color: Color(0xFF9AA0AC), fontSize: 16, fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         );
       },
     );
@@ -254,6 +112,14 @@ class InformationScreen extends GetView<InformationScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Allow gradient behind AppBar
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          detectOnTap();
+          Get.toNamed(AppRoutes.Infoaddvalue, arguments: args['catId']);
+        },
+        backgroundColor: CodeLockColor.accentVibrant,
+        child: const Icon(Icons.add, size: 30, color: Colors.white),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false, // hide the default back arrow
         backgroundColor: Colors.transparent, // Transparent AppBar
@@ -281,21 +147,6 @@ class InformationScreen extends GetView<InformationScreenController> {
           args['catName'],
           style: TextStyle(color: CodeLockColor.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          GestureDetector(
-              onTap: () {
-                detectOnTap();
-                Get.toNamed(AppRoutes.Infoaddvalue, arguments: args['catId']);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ImageIcon(
-                  const AssetImage(CodeLockImages.add),
-                  color: CodeLockColor.white, // light icon
-                  size: 33,
-                ),
-              ))
-        ],
       ),
       body: Container(
         width: double.infinity,
@@ -339,6 +190,10 @@ class InformationScreen extends GetView<InformationScreenController> {
                             child: CodeLockEmptyState(
                               categoryName: args['catName'],
                               imgId: args['imgId'], // Pass the exact image ID!
+                              onAddTap: () {
+                                detectOnTap();
+                                Get.toNamed(AppRoutes.Infoaddvalue, arguments: args['catId']);
+                              },
                             ),
                           );
                         } else {
@@ -365,12 +220,12 @@ class InformationScreen extends GetView<InformationScreenController> {
                                         performsFirstActionWithFullSwipe: false,
                                         widthSpace: 92,
                                         color: const Color(0xFFFF4D4F),
-                                        content: const Column(
+                                        content: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Icon(Icons.delete_outline_rounded, color: Colors.white, size: 28),
-                                            SizedBox(height: 4),
-                                            Text("Delete", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+                                            const Icon(Icons.delete_outline_rounded, color: Colors.white, size: 28),
+                                            const SizedBox(height: 4),
+                                            Text(allLanguages!.delete, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
                                           ],
                                         ),
                                         onTap: (handler) async {
@@ -380,33 +235,7 @@ class InformationScreen extends GetView<InformationScreenController> {
                                           _showDeleteConfirmationDialog(context, data);
                                         },
                                       ),
-                                      SwipeAction(
-                                        backgroundRadius: 0.0,
-                                        performsFirstActionWithFullSwipe: false,
-                                        widthSpace: 92,
-                                        color: CodeLockColor.accentVibrant,
-                                        content: const Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.edit_outlined, color: Colors.white, size: 28),
-                                            SizedBox(height: 4),
-                                            Text("Edit", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
-                                          ],
-                                        ),
-                                        onTap: (handler) async {
-                                          detectOnTap();
-                                          HapticFeedback.lightImpact();
-                                          handler(false); // Close swipe action
-                                          Get.toNamed(
-                                            AppRoutes.DescriptionScreen,
-                                            arguments: {
-                                              'titleId': data.titleId,
-                                              'titleName': data.titleName
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ],
+                                      ],
                                     child: GestureDetector(
                                       onTap: () {
                                         detectOnTap();
@@ -436,11 +265,6 @@ class InformationScreen extends GetView<InformationScreenController> {
                                       },
                                       child: InfoCell(
                                         TitleName: data.titleName.toString(),
-                                        onMoreTap: () {
-                                          detectOnTap();
-                                          HapticFeedback.lightImpact();
-                                          _showMoreBottomSheet(context, data);
-                                        },
                                       ),
                                     ),
                                   ));

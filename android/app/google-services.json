@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "72875354354",
     "project_id": "codeblock-fbba5",
-    "storage_bucket": "codeblock-fbba5.appspot.com"
+    "storage_bucket": "codeblock-fbba5.firebasestorage.app"
   },
   "client": [
     {
@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "72875354354-nlt1npvmlcqud7osd8vrrnqu29n1ubpt.apps.googleusercontent.com",
+          "client_id": "72875354354-8raele7lc7tv1cflmo5q4v70e41pltd4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codelock.code_lock",
+            "certificate_hash": "0aee098e7e878500f4a9040821d19f96acad44f2"
+          }
+        },
+        {
+          "client_id": "72875354354-tte9dd1fsrrfcv8mejnc87f20b38b8hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codelock.code_lock",
+            "certificate_hash": "3f4ee18d116a1b96b1b8df8c8d8e646014801258"
+          }
+        },
+        {
+          "client_id": "72875354354-ccrao1fpnvbvmjdfpllcl56cvvgtapmj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "72875354354-nlt1npvmlcqud7osd8vrrnqu29n1ubpt.apps.googleusercontent.com",
+              "client_id": "72875354354-ccrao1fpnvbvmjdfpllcl56cvvgtapmj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

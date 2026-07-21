@@ -20,11 +20,13 @@ class StartScreenController extends GetxController {
   TextEditingController otp2 = TextEditingController();
 
   final SingletonTimer time = SingletonTimer();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  RxString passcodeText = ''.obs;
+  RxString confirmPasscodeText = ''.obs;
 
   password(BuildContext context) {
-    if (otp1.text.isEmpty || otp2.text.isEmpty) {
-      CodeLockToast(context, text: allLanguages!.pleaseEnterValidPassword);
-    } else if (otp1.text.length < 6 && otp2.text.length < 6) {
+    if (otp1.text.length < 6 || otp2.text.length < 6) {
       CodeLockToast(context, text: CodeLockString.passLength6);
     } else if (otp1.text == otp2.text) {
       LocalData.setPasswordData(otp2.text);

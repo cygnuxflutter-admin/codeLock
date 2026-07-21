@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:code_lock/app_database/app_database.dart';
+import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:code_lock/app_routes.dart';
 import 'package:code_lock/modules/Home Screen/home_screen_controller.dart' hide Status;
 import 'package:code_lock/custom/detectTimer.dart';
@@ -142,14 +144,20 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                       )
                                     : keyboardType(data.subFieldType) ==
                                             'Password'
-                                        ? PassTextField(
-                                            controller: controller
-                                                .dataIn[index].controller,
-                                            titleText: data.subName.toString(),
-                                            hintText: data.subName.toString(),
-                                            keyboardType: TextInputType.text,
-                                            obscureText: true,
-                                          )
+                                            ? PassTextField(
+                                                controller: controller
+                                                    .dataIn[index].controller,
+                                                titleText: data.subName.toString(),
+                                                hintText: data.subName.toString(),
+                                                keyboardType: TextInputType.text,
+                                                obscureText: true,
+                                                validator: (value) {
+                                                  if (value == null || value.trim().isEmpty) {
+                                                    return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                  }
+                                                  return null;
+                                                },
+                                              )
                                         : keyboardType(data.subFieldType) ==
                                                 'DatePicker'
                                             ? DatePicker(
@@ -159,6 +167,12 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                                     data.subName.toString(),
                                                 controller: controller
                                                     .dataIn[index].controller,
+                                                validator: (value) {
+                                                  if (value == null || value.trim().isEmpty) {
+                                                    return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                  }
+                                                  return null;
+                                                },
                                               )
                                             : keyboardType(data.subFieldType) ==
                                                     'TimePicker'
@@ -170,6 +184,12 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                                     controller: controller
                                                         .dataIn[index]
                                                         .controller,
+                                                    validator: (value) {
+                                                      if (value == null || value.trim().isEmpty) {
+                                                        return "ENTER ${data.subName.toString().toUpperCase()}";
+                                                      }
+                                                      return null;
+                                                    },
                                                   )
                                                 : Info_textField(
                                                     key: Key("${data.subId}"),
@@ -187,7 +207,7 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                                             data.subFieldType),
                                                     validator: (value) {
                                                       if (value == null || value.isEmpty) {
-                                                        return CodeLockString.enterValue;
+                                                        return "ENTER ${data.subName.toString().toUpperCase()}";
                                                       }
                                                       return null;
                                                     },
@@ -261,6 +281,12 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                   Get.find<HomeScreenController>().getCatMainData();
                                   Get.find<HomeScreenController>().getTitleData();
                                 }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar(
+                                    context: context,
+                                    msg: "Saved Successfully",
+                                  ),
+                                );
                                 Get.until((route) => route.settings.name == AppRoutes.HomeScreen);
                               } else {
                                 // Inline validator already shows the error text

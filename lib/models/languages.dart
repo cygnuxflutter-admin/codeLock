@@ -128,7 +128,10 @@ class AllLanguages {
       required this.oldpasscode,
       required this.newpasscode,
       required this.plzentergroname,
-      required this.plzenterfieldname});
+      required this.plzenterfieldname,
+      required this.welcomeBack,
+      required this.enterYourPasswordToContinue,
+      required this.secureYourData});
 
   final String enterCodelockToChangeCodelock;
   final String languageselection;
@@ -221,6 +224,9 @@ class AllLanguages {
   final String newpasscode;
   final String plzentergroname;
   final String plzenterfieldname;
+  final String welcomeBack;
+  final String enterYourPasswordToContinue;
+  final String secureYourData;
 
   // final String abc;
 
@@ -326,6 +332,9 @@ class AllLanguages {
         newpasscode: json["newpasscode"] ?? "",
         plzentergroname: json["plzentergroname"] ?? "",
         plzenterfieldname: json["plzenterfieldname"] ?? "",
+        welcomeBack: json["welcome_back"] ?? "Welcome Back",
+        enterYourPasswordToContinue: json["enter_your_password_to_continue"] ?? "Enter your password to continue",
+        secureYourData: json["secure_your_data"] ?? "Secure your data",
 
         // languageselection: 'Language Selection', codelock: 'CodeLock', entersomething: 'Enter Something', wrongpassword: 'Wrong password', abc: json["ABC-XYZ"],
       );
@@ -424,7 +433,10 @@ class AllLanguages {
         "New password is Not Match": newpwdisnotmatch,
         "Old Passcode": oldpasscode,
         "New Passcode": newpasscode,
-        "Please Enter Group Name": plzentergroname,
-        "Please Enter Field Name": plzenterfieldname,
+        "plzentergroname": plzentergroname,
+        "plzenterfieldname": plzenterfieldname,
+        "welcome_back": welcomeBack,
+        "enter_your_password_to_continue": enterYourPasswordToContinue,
+        "secure_your_data": secureYourData,
       };
 }

@@ -82,7 +82,7 @@
             "change_language": "Change Language",
             "plzentervalidpwd" : "Please Enter Password",
             "login_successfully" : "Login successfully",
-            "plzenterpasscode" : "Please Enter Passcode",
+            "plzenterpasscode" : "Enter Passcode",
             "passcodelenghthshouldbe4digit" : "Passcode Length should be 4 digit.",
             "Back" : "< Back",
             "OldPassword" : "Old Password",
@@ -92,7 +92,10 @@
             "oldpasscode" : "Old Passcode",
             "newpasscode" : "New Passcode",
             "plzentergroname" : "Please Enter Group Name",
-            "plzenterfieldname" : "Please Enter Field Name"
+            "plzenterfieldname" : "Please Enter Field Name",
+            "welcome_back": "Welcome Back",
+            "enter_your_password_to_continue": "Enter your password to continue",
+            "secure_your_data": "Secure your data"
         },
         "French": {
             "enter_codelock_to_change_codelock": "Veuillez entrer votre CodeLock actuel pour changer de codelock.",
@@ -186,8 +189,10 @@
             "oldpasscode" : "Ancien mot de passe",
             "newpasscode" : "Nouveau mot de passe",
             "plzentergroname" : "Veuillez entrer le nom du groupe",
-            "plzenterfieldname" : "Veuillez entrer le nom du champ"
-
+            "plzenterfieldname" : "Veuillez entrer le nom du champ",
+            "welcome_back": "Content de te revoir",
+            "enter_your_password_to_continue": "Entrez votre mot de passe pour continuer",
+            "secure_your_data": "Sécurisez vos données"
         },
         "German": {
             "enter_codelock_to_change_codelock": "Bitte geben Sie Ihre aktuelle CodeLock ein, um das Codelock zu ändern.",
@@ -279,8 +284,10 @@
             "oldpasscode" : "Alter Passcode",
             "newpasscode" : "Neuer Passcode",
             "plzentergroname" : "Bitte Gruppennamen eingeben",
-            "plzenterfieldname" : "Bitte geben Sie den Feldnamen ein"
-
+            "plzenterfieldname" : "Bitte geben Sie den Feldnamen ein",
+            "welcome_back": "Willkommen zurück",
+            "enter_your_password_to_continue": "Geben Sie Ihr Passwort ein, um fortzufahren",
+            "secure_your_data": "Sichern Sie Ihre Daten"
         },
         "Hindi": {
             "enter_codelock_to_change_codelock": "CodeLock बदलने के लिए कृपया अपना वर्तमान CodeLock दर्ज करें।",
@@ -337,7 +344,7 @@
             "reset": "रीसेट",
             "reset_data": "डेटा रीसेट करें",
             "restore": "पुनर्स्थापित",
-            "save": "बचाना",
+            "save": "सेव करें",
             "save_sub_field": "फ़ील्ड सहेजें",
             "save_sub_value": "मूल्य सहेजें",
             "sign_in": "साइन इन करें",
@@ -362,7 +369,7 @@
             "change_language": "भाषा बदलो",
             "plzentervalidpwd": "कृपया पासवर्ड दर्ज करें",
             "login_successfully": "लॉगिन सुचारू रूप से चला गया",
-            "plzenterpasscode": "कृपया पासकोड दर्ज करें",
+            "plzenterpasscode": "पासकोड दर्ज करें",
             "passcodelenghthshouldbe4digit": "पासकोड की लंबाई 4 अंकों की होनी चाहिए।",
             "Back" : "< पीछे",
             "OldPassword" : "पुराना पासवर्ड",
@@ -372,8 +379,10 @@
             "oldpasscode" : "पुराना पासकोड",
             "newpasscode" : "नया पासकोड",
             "plzentergroname" : "कृपया समूह का नाम दर्ज करें",
-            "plzenterfieldname" : "कृपया फील्ड का नाम दर्ज करें"
-
+            "plzenterfieldname" : "कृपया फील्ड का नाम दर्ज करें",
+            "welcome_back": "वापसी पर स्वागत है",
+            "enter_your_password_to_continue": "जारी रखने के लिए अपना पासवर्ड दर्ज करें",
+            "secure_your_data": "अपना डेटा सुरक्षित रखें"
         },
         "Spanish": {
             "enter_codelock_to_change_codelock": "Ingrese su CodeLock actual para cambiar Codelock.",
@@ -465,8 +474,10 @@
             "oldpasscode" : "Código de acceso antiguo",
             "newpasscode" : "Nuevo código de acceso",
             "plzentergroname" : "Ingrese el nombre del grupo",
-            "plzenterfieldname" : "Ingrese el nombre del campo"
-
+            "plzenterfieldname" : "Ingrese el nombre del campo",
+            "welcome_back": "Bienvenido de nuevo",
+            "enter_your_password_to_continue": "Ingrese su contraseña para continuar",
+            "secure_your_data": "Asegure sus datos"
         }
     }
 }
