@@ -97,17 +97,29 @@ class _TimePickerState extends State<TimePicker> {
                             initialTime: TimeOfDay.now(),
                             builder: (BuildContext context, Widget? child) {
                               return Theme(
-                                data: ThemeData.dark().copyWith(
-                                  colorScheme: ColorScheme.dark(
-                                    primary: CodeLockColor.accentVibrant,
-                                    secondary: CodeLockColor.accentVibrant,
-                                    tertiary: CodeLockColor.accentVibrant,
-                                    onPrimary: Colors.white,
-                                    surface: CodeLockColor.bgGradientStart,
-                                    onSurface: Colors.white,
-                                  ),
-                                  dialogBackgroundColor: CodeLockColor.bgGradientEnd,
-                                ),
+                                data: CodeLockColor.isDark
+                                    ? ThemeData.dark().copyWith(
+                                        colorScheme: ColorScheme.dark(
+                                          primary: CodeLockColor.accentVibrant,
+                                          secondary: CodeLockColor.accentVibrant,
+                                          tertiary: CodeLockColor.accentVibrant,
+                                          onPrimary: Colors.white,
+                                          surface: CodeLockColor.bgGradientStart,
+                                          onSurface: Colors.white,
+                                        ),
+                                        dialogBackgroundColor: CodeLockColor.bgGradientEnd,
+                                      )
+                                    : ThemeData.light().copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary: CodeLockColor.accentVibrant,
+                                          secondary: CodeLockColor.accentVibrant,
+                                          tertiary: CodeLockColor.accentVibrant,
+                                          onPrimary: Colors.white,
+                                          surface: CodeLockColor.bgGradientStart,
+                                          onSurface: Colors.black,
+                                        ),
+                                        dialogBackgroundColor: CodeLockColor.bgGradientEnd,
+                                      ),
                                 child: child!,
                               );
                             },

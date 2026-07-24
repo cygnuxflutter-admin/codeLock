@@ -17,7 +17,7 @@ class codeLockTextfield extends StatefulWidget {
     this.prefixWidget,
     this.onChanged,
     this.validator,
-    this.textColor = Colors.white,
+    this.textColor,
     this.isPassword = false,
   }) : super(key: key);
 
@@ -32,7 +32,7 @@ class codeLockTextfield extends StatefulWidget {
   final Widget? prefixWidget;
   final void Function(String value)? onChanged;
   final String? Function(String?)? validator;
-  final Color textColor;
+  final Color? textColor;
   final bool isPassword;
 
   @override
@@ -104,37 +104,39 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                             state.didChange(val);
                             if (widget.onChanged != null) widget.onChanged!(val);
                           },
-                  obscureText: _obscureText,
-                  style: TextStyle(
-                      color: widget.textColor,
-                      fontSize: 16.0,
-                      fontFamily: "Inter"),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: widget.hintText,
-                    hintStyle: TextStyle(
-                        color: widget.HinttextColor.withOpacity(0.5),
-                        fontSize: 16.0,
-                        fontFamily: "Inter"),
-                    suffixIcon: widget.isPassword
-                        ? IconButton(
-                            icon: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
-                              color: widget.HinttextColor,
-                              size: 22,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          )
-                        : (widget.iconButton ?? const SizedBox()),
-                  ),
-                ),
-              ),
-              if (!widget.isPassword && widget.iconButton == null)
-                SizedBox(width: context.getWidth * 0.03),
+                          obscureText: _obscureText,
+                          style: TextStyle(
+                              color: widget.textColor ?? CodeLockColor.white,
+                              fontSize: 16.0,
+                              fontFamily: "Inter"),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                            border: InputBorder.none,
+                            hintText: widget.hintText,
+                            hintStyle: TextStyle(
+                                color: widget.HinttextColor.withOpacity(0.5),
+                                fontSize: 16.0,
+                                fontFamily: "Inter"),
+                            suffixIcon: widget.isPassword
+                                ? IconButton(
+                                    icon: Icon(
+                                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                                      color: widget.HinttextColor,
+                                      size: 22,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  )
+                                : (widget.iconButton ?? const SizedBox()),
+                          ),
+                        ),
+                      ),
+                      if (!widget.isPassword && widget.iconButton == null)
+                        SizedBox(width: context.getWidth * 0.03),
             ],
           ),
         ),

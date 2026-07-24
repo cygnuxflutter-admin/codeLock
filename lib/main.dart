@@ -22,15 +22,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalData.init();
+  CodeLockColor.isDark = LocalData.getIsDarkMode ?? true;
+  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
+  });
 
-  });
-  Future.delayed(const Duration(seconds: 10), () {
-    /// DriveBackup().signInToGoogle();
-  });
-  await LocalData.init();
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
@@ -56,8 +55,13 @@ class MyApp extends StatelessWidget {
         title: 'Code Lock',
         theme: ThemeData(
           scaffoldBackgroundColor: CodeLockColor.bgGradientStart,
+          brightness: Brightness.light,
+        ),
+        darkTheme: ThemeData(
+          scaffoldBackgroundColor: CodeLockColor.bgGradientStart,
           brightness: Brightness.dark,
         ),
+        themeMode: (LocalData.getIsDarkMode ?? false) ? ThemeMode.dark : ThemeMode.light,
         getPages: getpages,
         initialBinding: BindingsBuilder(() => {
               Get.lazyPut(() => LanguageScreenController()),

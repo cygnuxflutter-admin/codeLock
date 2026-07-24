@@ -47,7 +47,7 @@ class Home_container extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: CodeLockColor.accentVibrant.withOpacity(0.4),
+                        color: CodeLockColor.accentVibrant.withOpacity(0.2), // Reduced shadow by ~20%
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -55,7 +55,7 @@ class Home_container extends StatelessWidget {
                   ),
                   child: Image(
                     height: 28,
-                    color: CodeLockColor.white, // bright icon
+                    color: Colors.white, // bright icon
                     image: MenuIcon,
                   ),
                 ),
@@ -75,7 +75,7 @@ class Home_container extends StatelessWidget {
                 // Divider line
                 Container(
                   height: context.getHeight * 0.06,
-                  width: 1.5,
+                  width: 1.0,
                   color: CodeLockColor.glassBorder,
                 ),
                 SizedBox(width: context.getWidth * 0.04),

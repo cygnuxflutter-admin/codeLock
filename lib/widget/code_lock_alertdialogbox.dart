@@ -44,8 +44,8 @@ CodeLockAlertDialogbox(
               children: [
                 Text(
                   titletext,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: CodeLockColor.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,7 +55,7 @@ CodeLockAlertDialogbox(
                 Text(
                   text,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
+                    color: CodeLockColor.white.withOpacity(0.7),
                     fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
@@ -76,7 +76,7 @@ CodeLockAlertDialogbox(
                         child: Text(
                           first,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
+                            color: CodeLockColor.white.withOpacity(0.6),
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),

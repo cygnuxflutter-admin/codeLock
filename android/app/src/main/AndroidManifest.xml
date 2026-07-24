@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codelock.code_lock">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="code_lock"
+        android:label="CodeLock"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

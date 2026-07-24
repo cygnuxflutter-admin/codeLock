@@ -40,6 +40,9 @@ class FieldScreenController extends GetxController {
     "🖼️  Image",
     "📅  Date",
     "🕒  Time",
+    "📧  Email",
+    "🌐  URL / Website",
+    "📄  Notes (Multi-line)",
   ];
 
   String getReturnValue(index) {

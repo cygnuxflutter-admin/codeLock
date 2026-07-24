@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:code_lock/custom/colors/code_lock_color.dart';
-import 'package:code_lock/modules/Home Screen/home_screen_controller.dart';
+import 'package:code_lock/modules/home_screen/home_screen_controller.dart';
 
 
 class CodeLockEmptyState extends StatelessWidget {
@@ -84,6 +84,13 @@ class CodeLockEmptyState extends StatelessWidget {
         'No Certificates Added',
         'Store your certificates securely.',
         'Tap the + button below to add your first certificate.',
+      );
+    } else if (lower.contains('backup')) {
+      return EmptyStateDetails(
+        Icons.cloud_off_outlined,
+        'No Backups Found',
+        'You have not created any backups yet.',
+        'Go back and tap "Back Up" to secure your data.',
       );
     }
     

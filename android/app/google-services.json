@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "72875354354-skkg67lprhakggfthia1jeuhd53qusi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codelock.code_lock",
+            "certificate_hash": "c10af980bafe7fa303c7f20ce154a4b0514170a5"
+          }
+        },
+        {
           "client_id": "72875354354-tte9dd1fsrrfcv8mejnc87f20b38b8hj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

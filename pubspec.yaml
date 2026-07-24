@@ -58,6 +58,7 @@ dependencies:
   flutter_archive:
   archive: ^3.3.7
   firebase_crashlytics: ^3.3.1
+  logger: ^2.4.0
 
 flutter_launcher_icons:
   android: true
@@ -94,8 +95,7 @@ flutter:
     - assets/Icons/Images/Group Icons/
     - assets/languages/
     - assets/default_data/
-    - assets/AppIcon/CodeLock.png
-    - assets/AppIcon/LOGO.png
+
     - assets/AppIcon/logo2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

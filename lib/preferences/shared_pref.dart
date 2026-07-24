@@ -35,6 +35,12 @@ class LocalData {
   static bool? get getIsPass =>
       _sharedPreferences.getBool(SharedKey.pass) ?? false;
   static get getIsSec => _sharedPreferences.getDouble(SharedKey.sec) ?? 20;
+  static bool? get getIsDarkMode =>
+      _sharedPreferences.getBool(SharedKey.themeMode) ?? true; // Default to dark mode
+
+  static setIsDarkMode(bool isDark) async {
+    await _sharedPreferences.setBool(SharedKey.themeMode, isDark);
+  }
 
   static Future<bool>? clear() {
     if (_sharedPreferences == null) return null;
@@ -48,4 +54,5 @@ class SharedKey {
   static String pass = "pass";
   static String sec = 'sec';
   static String language = 'language';
+  static String themeMode = 'themeMode';
 }

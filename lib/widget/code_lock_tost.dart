@@ -26,10 +26,16 @@ void CodeLockToast(
       ? Icons.error_outline_rounded
       : (isSuccess ? Icons.check_circle_outline_rounded : Icons.info_outline_rounded);
 
+  final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  final Color bgColor = isDarkMode 
+      ? const Color(0xFF0F172A).withValues(alpha: 0.9) 
+      : const Color(0xffFFFFFF).withValues(alpha: 0.9);
+  final Color textColor = isDarkMode ? Colors.white : const Color(0xff1A1C29);
+
   Widget toastWidget = Container(
     margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
     decoration: BoxDecoration(
-      color: const Color(0xFF0F172A).withValues(alpha: 0.9), // Premium dark background
+      color: bgColor, // Premium dynamic background
       borderRadius: BorderRadius.circular(16.0),
       border: Border.all(
         color: accentColor.withValues(alpha: 0.5),
@@ -61,8 +67,8 @@ void CodeLockToast(
               Flexible(
                 child: Text(
                   text,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: textColor,
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
                   ),

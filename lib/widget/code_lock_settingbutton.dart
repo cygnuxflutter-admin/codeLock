@@ -10,6 +10,7 @@ class SettingButton extends StatelessWidget {
     required this.text,
     required this.iconcolor,
     required this.iconsize,
+    this.trailingWidget,
   }) : super(key: key);
 
   final AssetImage icons;
@@ -17,6 +18,7 @@ class SettingButton extends StatelessWidget {
   final Color iconcolor;
   final double iconsize;
   final VoidCallback onTap;
+  final Widget? trailingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class SettingButton extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(
+                    trailingWidget ?? Icon(
                       Icons.chevron_right,
                       color: CodeLockColor.white.withOpacity(0.5),
                       size: 24,

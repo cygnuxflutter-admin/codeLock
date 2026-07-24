@@ -53,7 +53,6 @@ class _Info_textFieldState extends State<Info_textField> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
-                    height: context.getHeight * 0.065,
                     decoration: BoxDecoration(
                       color: CodeLockColor.glassBg,
                       borderRadius: BorderRadius.circular(12),
@@ -62,46 +61,51 @@ class _Info_textFieldState extends State<Info_textField> {
                         width: state.hasError ? 1.5 : 1.2,
                       ),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.accentVibrant,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                            ),
-                          ),
-                          width: 4.5,
-                        ),
-                        SizedBox(width: context.getWidth * 0.04),
-                        Expanded(
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            controller: widget.controller,
-                            keyboardType: widget.keyboardType,
-                            cursorColor: CodeLockColor.accentVibrant,
-                            enabled: widget.enabled,
-                            obscureText: widget.obscureText,
-                            style: TextStyle(color: CodeLockColor.white, fontSize: 16),
-                            decoration: InputDecoration(
-                              hintText: widget.hintText,
-                              hintStyle: TextStyle(
-                                color: CodeLockColor.white.withOpacity(0.4),
-                                fontSize: 16,
+                    child: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.accentVibrant,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
                               ),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
                             ),
-                            onChanged: (val) {
-                              state.didChange(val);
-                              detectOnTap();
-                            },
+                            width: 4.5,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: context.getWidth * 0.04),
+                          Expanded(
+                            child: TextField(
+                              textAlignVertical: widget.keyboardType == TextInputType.multiline ? TextAlignVertical.top : TextAlignVertical.center,
+                              controller: widget.controller,
+                              keyboardType: widget.keyboardType,
+                              maxLines: widget.keyboardType == TextInputType.multiline ? null : 1,
+                              minLines: widget.keyboardType == TextInputType.multiline ? 3 : 1,
+                              cursorColor: CodeLockColor.accentVibrant,
+                              enabled: widget.enabled,
+                              obscureText: widget.obscureText,
+                              style: TextStyle(color: CodeLockColor.white, fontSize: 16),
+                              decoration: InputDecoration(
+                                hintText: widget.hintText,
+                                hintStyle: TextStyle(
+                                  color: CodeLockColor.white.withOpacity(0.4),
+                                  fontSize: 16,
+                                ),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                              ),
+                              onChanged: (val) {
+                                state.didChange(val);
+                                detectOnTap();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

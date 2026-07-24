@@ -25,6 +25,11 @@ class CustomCheckbox extends StatefulWidget {
 }
 
 class _CustomCheckboxState extends State<CustomCheckbox> {
+  String _capitalize(String text) {
+    if (text.isEmpty) return text;
+    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,111 +37,104 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.titleText,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: CodeLockColor.white.withOpacity(0.9),
+          Padding(
+            padding: const EdgeInsets.only(left: 4, bottom: 8),
+            child: Text(
+              widget.titleText,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: CodeLockColor.white.withOpacity(0.9),
+              ),
             ),
           ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                height: context.getHeight * 0.065,
-                decoration: BoxDecoration(
-                  color: CodeLockColor.glassBg,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: CodeLockColor.glassBorder,
-                    width: 1.2,
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
+          Container(
+            height: 56,
+            decoration: BoxDecoration(
+              color: CodeLockColor.glassBg,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: CodeLockColor.glassBorder, width: 1.2),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: widget.enable.value ? () {
+                      detectOnTap();
+                      setState(() {
+                        widget.colorValue = 1;
+                        widget.checkValue(CodeLockString.no);
+                      });
+                    } : null,
+                    child: Container(
                       decoration: BoxDecoration(
-                        color: CodeLockColor.accentVibrant,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          bottomLeft: Radius.circular(12),
+                        color: widget.colorValue == 1 
+                            ? CodeLockColor.accentVibrant 
+                            : Colors.transparent,
+                        borderRadius: const BorderRadius.horizontal(left: Radius.circular(11)),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "No",
+                              style: TextStyle(
+                                color: CodeLockColor.white,
+                                fontSize: 16,
+                                fontWeight: widget.colorValue == 1 ? FontWeight.bold : FontWeight.w500,
+                              ),
+                            ),
+                            if (widget.colorValue == 1) ...[
+                              const SizedBox(width: 8),
+                              Icon(Icons.check_circle, color: CodeLockColor.white, size: 20),
+                            ]
+                          ],
                         ),
                       ),
-                      width: 4.5,
                     ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                if (widget.enable.value) {
-                                  detectOnTap();
-                                  setState(() {
-                                    widget.colorValue = 0;
-                                    widget.checkValue(CodeLockString.yes);
-                                  });
-                                }
-                              },
-                              child: Container(
-                                color: widget.colorValue == 0
-                                    ? CodeLockColor.accentVibrant.withOpacity(0.8)
-                                    : Colors.transparent,
-                                child: Center(
-                                  child: Text(
-                                    CodeLockString.yes,
-                                    style: TextStyle(
-                                      color: CodeLockColor.white,
-                                      fontSize: 16,
-                                      fontWeight: widget.colorValue == 0 ? FontWeight.bold : FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
+                  ),
+                ),
+                Container(width: 1.2, color: CodeLockColor.glassBorder),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: widget.enable.value ? () {
+                      detectOnTap();
+                      setState(() {
+                        widget.colorValue = 0;
+                        widget.checkValue(CodeLockString.yes);
+                      });
+                    } : null,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.colorValue == 0 
+                            ? CodeLockColor.accentVibrant 
+                            : Colors.transparent,
+                        borderRadius: const BorderRadius.horizontal(right: Radius.circular(11)),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Yes",
+                              style: TextStyle(
+                                color: CodeLockColor.white,
+                                fontSize: 16,
+                                fontWeight: widget.colorValue == 0 ? FontWeight.bold : FontWeight.w500,
                               ),
                             ),
-                          ),
-                          Container(
-                            width: 1.2,
-                            color: CodeLockColor.glassBorder,
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                if (widget.enable.value) {
-                                  detectOnTap();
-                                  setState(() {
-                                    widget.colorValue = 1;
-                                    widget.checkValue(CodeLockString.no);
-                                  });
-                                }
-                              },
-                              child: Container(
-                                color: widget.colorValue == 1
-                                    ? CodeLockColor.accentVibrant.withOpacity(0.8)
-                                    : Colors.transparent,
-                                child: Center(
-                                  child: Text(
-                                    CodeLockString.no,
-                                    style: TextStyle(
-                                      color: CodeLockColor.white,
-                                      fontSize: 16,
-                                      fontWeight: widget.colorValue == 1 ? FontWeight.bold : FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                            if (widget.colorValue == 0) ...[
+                              const SizedBox(width: 8),
+                              Icon(Icons.check_circle, color: CodeLockColor.white, size: 20),
+                            ]
+                          ],
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ],

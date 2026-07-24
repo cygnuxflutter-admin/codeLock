@@ -60,6 +60,42 @@ class AppDataBase implements DBHelperMethod<Map<String, dynamic>> {
     return rowsDeleted;
   }
 
+  Future<int> deleteSubCat(String subId, String tableName) async {
+    Database database = await _dataBaseHelper.dataBase;
+    int rowsDeleted = await database.delete(
+      tableName,
+      where: 'SUB_ID = ?',
+      whereArgs: [subId],
+    );
+    return rowsDeleted;
+  }
+
+  Future<int> updateCatMain(
+      Map<String, dynamic> data, String table, String id) async {
+    Database dataBase = await _dataBaseHelper.dataBase;
+    return dataBase.transaction(
+      (txn) => txn.update(
+        table,
+        data,
+        where: 'CAT_ID = ?',
+        whereArgs: [id],
+      ),
+    );
+  }
+
+  Future<int> updateSubCat(
+      Map<String, dynamic> data, String table, String id) async {
+    Database dataBase = await _dataBaseHelper.dataBase;
+    return dataBase.transaction(
+      (txn) => txn.update(
+        table,
+        data,
+        where: 'SUB_ID = ?',
+        whereArgs: [id],
+      ),
+    );
+  }
+
   @override
   Future<int> update(Map<String, dynamic> data, String table) async {
     Database dataBase = await _dataBaseHelper.dataBase;
