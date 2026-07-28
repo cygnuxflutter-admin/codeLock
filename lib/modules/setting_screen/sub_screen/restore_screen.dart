@@ -178,12 +178,6 @@ class _RestoreScreenState extends State<RestoreScreen> {
                                                 detectOnTap();
                                                 Get.back();
                                                 controller.deleteBackUp(element.id.toString());
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                  snackBar(
-                                                    context: context,
-                                                    msg: "Backup deleted successfully",
-                                                  ),
-                                                );
                                               },
                                             );
                                           },

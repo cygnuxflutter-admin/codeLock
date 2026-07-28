@@ -92,7 +92,7 @@ class SettingScreenController extends GetxController {
     );
   }
 
-  void getAllBackUp() async {
+  Future<void> getAllBackUp() async {
     if (streamFiles.isClosed) {
       streamFiles = StreamController<List<File>>();
     }
@@ -101,9 +101,16 @@ class SettingScreenController extends GetxController {
   }
 
   void deleteBackUp(String id) async {
-    await drive.deleteFile(id).then((value) {
-      getAllBackUp();
-    });
+    _showLoadingDialog("Deleting backup...\nPlease wait.");
+    try {
+      await drive.deleteFile(id);
+      await getAllBackUp();
+      Get.back(); // close loading dialog
+      Get.snackbar("Backup Deleted", "Success", colorText: Colors.white, backgroundColor: CodeLockColor.green.withOpacity(0.8));
+    } catch (err) {
+      Get.back(); // close loading dialog
+      Get.snackbar("Delete Failed", "$err", colorText: Colors.white, backgroundColor: Colors.redAccent.withOpacity(0.8));
+    }
   }
 
   @override

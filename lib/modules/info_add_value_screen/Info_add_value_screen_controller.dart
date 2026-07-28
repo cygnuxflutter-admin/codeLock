@@ -35,6 +35,7 @@ class InfoAddValueScreenController extends GetxController {
 
   void getsubCatData() {
     catIdData = Get.arguments;
+    _changeStatus(Status.loading);
     _appDataBase.query(Tables.subCat).then((value) {
       subCatTable = value.map((map) => SubCat.fromMap(map)).toList();
       getsubDataContain();

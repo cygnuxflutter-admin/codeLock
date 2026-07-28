@@ -129,116 +129,104 @@ class InformationScreen extends GetView<InformationScreenController> {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Obx(
-                  () {
-                    switch (controller.status.value) {
-                      case Status.loading:
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: CodeLockColor.accentVibrant,
-                          ),
-                        );
+          child: Obx(
+            () {
+              switch (controller.status.value) {
+                case Status.loading:
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: CodeLockColor.accentVibrant,
+                    ),
+                  );
 
-                      case Status.error:
-                        return Center(
-                          child: Text(
-                            CodeLockString.error,
-                            style: TextStyle(fontSize: 30, color: CodeLockColor.white),
-                          ),
-                        );
+                case Status.error:
+                  return Center(
+                    child: Text(
+                      CodeLockString.error,
+                      style: TextStyle(fontSize: 30, color: CodeLockColor.white),
+                    ),
+                  );
 
-                      case Status.done:
-                        if (controller.getTitleDataContain().isEmpty) {
-                          return SizedBox(
-                            height: context.getHeight * 0.7, // Adjust height so it centers nicely below AppBar
-                            child: CodeLockEmptyState(
-                              categoryName: args['catName'],
-                              imgId: args['imgId'], // Pass the exact image ID!
-                              onAddTap: () {
+                case Status.done:
+                  if (controller.getTitleDataContain().isEmpty) {
+                    return SizedBox(
+                      height: context.getHeight * 0.7, // Adjust height so it centers nicely below AppBar
+                      child: CodeLockEmptyState(
+                        categoryName: args['catName'],
+                        imgId: args['imgId'], // Pass the exact image ID!
+                        onAddTap: () {
+                          detectOnTap();
+                          Get.toNamed(AppRoutes.Infoaddvalue, arguments: args['catId']);
+                        },
+                      ),
+                    );
+                  } else {
+                    return ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: controller.dataIn.length,
+                      separatorBuilder:
+                          (BuildContext context, int index) =>
+                              SizedBox(height: context.getWidth * 0.03),
+                      itemBuilder: (context, index) {
+                        TitleModel data = controller.dataIn[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: GestureDetector(
+                            onTap: () {
+                              detectOnTap();
+
+                              final updateCount = TitleModel(
+                                catId: data.catId,
+                                titleId: data.titleId,
+                                titleName: data.titleName,
+                                openedCount:
+                                    (int.parse(data.openedCount ?? '0') +
+                                            1)
+                                        .toString(),
+                              );
+
+                              _appDataBase.updateTitleCount(
+                                  updateCount.toMap(),
+                                  Tables.titles,
+                                  data.titleId.toString());
+
+                              Get.toNamed(
+                                AppRoutes.DescriptionScreen,
+                                arguments: {
+                                  'titleId': data.titleId,
+                                  'titleName': data.titleName,
+                                  'isEditMode': false
+                                },
+                              );
+                            },
+                            child: InfoCell(
+                              TitleName: data.titleName.toString(),
+                              onEdit: () {
                                 detectOnTap();
-                                Get.toNamed(AppRoutes.Infoaddvalue, arguments: args['catId']);
+                                Get.toNamed(
+                                  AppRoutes.DescriptionScreen,
+                                  arguments: {
+                                    'titleId': data.titleId,
+                                    'titleName': data.titleName,
+                                    'isEditMode': true
+                                  },
+                                );
+                              },
+                              onDelete: () {
+                                detectOnTap();
+                                _showDeleteConfirmationDialog(context, data);
                               },
                             ),
-                          );
-                        } else {
-                          return Column(
-                            children: [
-                              const SizedBox(height: 25),
-                              ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(), // Important for SingleChildScrollView
-                                itemCount: controller.dataIn.length,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        SizedBox(height: context.getWidth * 0.03),
-                                itemBuilder: (context, index) {
-                                  TitleModel data = controller.dataIn[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          detectOnTap();
-
-                                          final updateCount = TitleModel(
-                                            catId: data.catId,
-                                            titleId: data.titleId,
-                                            titleName: data.titleName,
-                                            openedCount:
-                                                (int.parse(data.openedCount ?? '0') +
-                                                        1)
-                                                    .toString(),
-                                          );
-
-                                          _appDataBase.updateTitleCount(
-                                              updateCount.toMap(),
-                                              Tables.titles,
-                                              data.titleId.toString());
-
-                                          Get.toNamed(
-                                            AppRoutes.DescriptionScreen,
-                                            arguments: {
-                                              'titleId': data.titleId,
-                                              'titleName': data.titleName,
-                                              'isEditMode': false
-                                            },
-                                          );
-                                        },
-                                        child: InfoCell(
-                                          TitleName: data.titleName.toString(),
-                                          onEdit: () {
-                                            detectOnTap();
-                                            Get.toNamed(
-                                              AppRoutes.DescriptionScreen,
-                                              arguments: {
-                                                'titleId': data.titleId,
-                                                'titleName': data.titleName,
-                                                'isEditMode': true
-                                              },
-                                            );
-                                          },
-                                          onDelete: () {
-                                            detectOnTap();
-                                            _showDeleteConfirmationDialog(context, data);
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                },
-                              ),
-                              const SizedBox(height: 25),
-                            ],
-                          );
-                        }
-                      default:
-                        return const SizedBox();
-                    }
-                  },
-                ),
-              ],
-            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                default:
+                  return const SizedBox();
+              }
+            },
           ),
         ),
       ),

@@ -72,7 +72,6 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  height: 64,
                   decoration: BoxDecoration(
                     color: CodeLockColor.glassBg,
                     borderRadius: BorderRadius.circular(18),
@@ -83,9 +82,10 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                       width: state.hasError || _focusNode.hasFocus ? 1.5 : 1.2,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (widget.prefixWidget != null) ...[
                         SizedBox(width: context.getWidth * 0.02),
@@ -110,8 +110,7 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                               fontSize: 16.0,
                               fontFamily: "Inter"),
                           decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 20),
                             border: InputBorder.none,
                             hintText: widget.hintText,
                             hintStyle: TextStyle(
@@ -137,11 +136,12 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                       ),
                       if (!widget.isPassword && widget.iconButton == null)
                         SizedBox(width: context.getWidth * 0.03),
-            ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
     if (state.hasError)
       Padding(
         padding: const EdgeInsets.only(top: 8.0, left: 8.0),

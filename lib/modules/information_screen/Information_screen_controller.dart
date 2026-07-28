@@ -25,6 +25,7 @@ class InformationScreenController extends GetxController {
   void getTitleData() {
     Map<String, dynamic> args = Get.arguments;
     catIdData = args['catId'];
+    _changeStatus(Status.loading);
     _appDataBase.query(Tables.titles).then((value) {
       titles = value.map((map) => TitleModel.fromMap(map)).toList();
       _changeStatus(Status.done);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:code_lock/custom/encryption_helper.dart';
 
 class DescriptionModel {
   String? catId;
@@ -29,7 +30,10 @@ class DescriptionModel {
     titleId = map['TITLE_ID'];
     titleName = map['TITLE_NAME'];
     valueId = map['VALUE_ID'];
-    value = TextEditingController(text: map['VALUE']);
+    
+    // Decrypt the value here. Old unencrypted data will gracefully remain plain text.
+    String? decryptedValue = EncryptionHelper.decryptText(map['VALUE']?.toString());
+    value = TextEditingController(text: decryptedValue);
   }
 
   Map<String, dynamic> toMap() {
@@ -41,7 +45,7 @@ class DescriptionModel {
       'TITLE_ID': titleId,
       'TITLE_NAME': titleName,
       'VALUE_ID': valueId,
-      'VALUE': value?.text,
+      'VALUE': EncryptionHelper.encryptText(value?.text),
     };
   }
 }

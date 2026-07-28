@@ -17,6 +17,7 @@ class ChangeCodeLockScreenController extends GetxController {
   password(BuildContext context) {
     if (formKeyPassword.currentState!.validate()) {
       LocalData.setPasswordData(otp5.text);
+      CodeLockToast(context, text: "Passcode changed successfully");
       Get.offAllNamed(AppRoutes.SettingScreen);
     }
   }
@@ -24,6 +25,7 @@ class ChangeCodeLockScreenController extends GetxController {
   newPasswordToast(BuildContext context) {
     if (formKeyPasscode.currentState!.validate()) {
       LocalData.setPasswordData(CodeLockString.pas6);
+      CodeLockToast(context, text: "Passcode changed successfully");
       Get.offAllNamed(AppRoutes.SettingScreen);
     }
   }

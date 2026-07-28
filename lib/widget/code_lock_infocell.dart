@@ -49,6 +49,8 @@ class InfoCell extends StatelessWidget {
               Expanded(
                 child: Text(
                   TitleName.trim().isEmpty ? "- -" : TitleName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
@@ -89,6 +91,8 @@ class InfoCell extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       TitleName.trim().isEmpty ? "- -" : TitleName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: CodeLockColor.white,
                                         fontSize: 20,
@@ -135,7 +139,7 @@ class InfoCell extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.more_vert, color: Colors.white70),
+                  icon: Icon(Icons.more_vert, color: CodeLockColor.white.withOpacity(0.7)),
                   splashRadius: 20,
                 ),
               if (onEdit == null && onDelete == null) SizedBox(width: context.getWidth * 0.04),

@@ -1,5 +1,6 @@
 import 'package:code_lock/app_database/app_database.dart';
 import 'package:code_lock/app_database/database_helper/database_helper.dart';
+import 'package:code_lock/custom/encryption_helper.dart';
 
 class DescriptionData {
   final AppDataBase _appDataBase = AppDataBase();
@@ -33,7 +34,7 @@ class DescriptionData {
       'TITLE_ID': titleId,
       'TITLE_NAME': titleName,
       'VALUE_ID': valueId,
-      'VALUE': value,
+      'VALUE': EncryptionHelper.encryptText(value),
     };
   }
 

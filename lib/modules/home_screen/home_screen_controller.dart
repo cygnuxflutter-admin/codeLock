@@ -71,6 +71,7 @@ class HomeScreenController extends GetxController {
   Future<void> getTitleData() async {
     await _appDataBase.query(Tables.titles).then((value) {
       titles = value.map((map) => TitleModel.fromMap(map)).toList();
+      catMainTableStreamController.add(catMainTable);
     }).catchError((error, stackTrace) {
       _changeStatus(Status.error);
     });

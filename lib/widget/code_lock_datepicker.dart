@@ -51,7 +51,6 @@ class _DatePickerState extends State<DatePicker> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
-                    height: context.getHeight * 0.065,
                     decoration: BoxDecoration(
                       color: CodeLockColor.glassBg,
                       borderRadius: BorderRadius.circular(12),
@@ -60,7 +59,9 @@ class _DatePickerState extends State<DatePicker> {
                         width: state.hasError ? 1.5 : 1.2,
                       ),
                     ),
-                child: Row(
+                    child: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -75,6 +76,7 @@ class _DatePickerState extends State<DatePicker> {
                     SizedBox(width: context.getWidth * 0.04),
                     Expanded(
                       child: TextField(
+                        textAlignVertical: TextAlignVertical.center,
                         controller: widget.controller,
                         cursorColor: CodeLockColor.accentVibrant,
                         enabled: widget.enabled,
@@ -88,6 +90,7 @@ class _DatePickerState extends State<DatePicker> {
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onChanged: detectOnTap(),
                         readOnly: true,
@@ -144,6 +147,7 @@ class _DatePickerState extends State<DatePicker> {
               ),
             ),
           ),
+        ),
           if (state.hasError)
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 4.0),

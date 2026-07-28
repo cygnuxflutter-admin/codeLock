@@ -97,7 +97,9 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Create a new secure 4-digit passcode",
+                    LocalData.getIsPass == true
+                        ? "Create a new secure password"
+                        : "Create a new secure 4-digit passcode",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
