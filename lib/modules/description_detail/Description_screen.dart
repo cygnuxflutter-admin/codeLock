@@ -22,6 +22,8 @@ import 'package:code_lock/widget/code_lock_passtextfield.dart';
 import 'package:code_lock/widget/code_lock_timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:code_lock/widget/code_lock_banner_ad.dart';
+import 'package:code_lock/services/ad_service.dart';
 import 'Description_screen_controller.dart';
 
 class DescriptionScreen extends GetView<DescriptionScreenController> {
@@ -76,9 +78,13 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-          children: [
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+
             const SizedBox(height: 10),
             Obx(
               () {
@@ -304,6 +310,10 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                                Get.find<HomeScreenController>().getCatMainData();
                                Get.find<HomeScreenController>().getTitleData();
                              }
+                             
+                             // Show Interstitial Ad after saving edits
+                             AdService.to.showInterstitialAd();
+
                              ScaffoldMessenger.of(context).showSnackBar(
                                snackBar(
                                  context: context,
@@ -352,9 +362,15 @@ class DescriptionScreen extends GetView<DescriptionScreenController> {
                 }
               },
             ),
+                  ],
+                ),
+              ),
+            ),
+            Obx(() => AdService.to.isConfigReady.value 
+                ? const CodeLockBannerAd() 
+                : const SizedBox.shrink()),
           ],
         ),
-      ),
       ),
       ),
     );

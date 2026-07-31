@@ -22,6 +22,7 @@ class InformationScreenController extends GetxController {
     super.onInit();
   }
 
+  int _retryCount = 0;
   void getTitleData() {
     Map<String, dynamic> args = Get.arguments;
     catIdData = args['catId'];
@@ -29,7 +30,17 @@ class InformationScreenController extends GetxController {
     _appDataBase.query(Tables.titles).then((value) {
       titles = value.map((map) => TitleModel.fromMap(map)).toList();
       _changeStatus(Status.done);
-    }).onError((error, stackTrace) => _changeStatus(Status.error));
+      _retryCount = 0;
+    }).catchError((error, stackTrace) {
+      if (_retryCount < 2) {
+        _retryCount++;
+        Future.delayed(const Duration(milliseconds: 300), () => getTitleData());
+      } else {
+        print("Error in Information getTitleData: $error");
+        _changeStatus(Status.error);
+        _retryCount = 0;
+      }
+    });
   }
 
   List<TitleModel> getTitleDataContain() {

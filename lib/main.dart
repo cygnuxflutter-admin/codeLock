@@ -12,6 +12,8 @@ import 'custom/timer_method.dart';
 import 'lifecycle.dart';
 import 'modules/language_select/language_screen_controller.dart';
 import 'package:code_lock/custom/colors/code_lock_color.dart';
+import 'package:code_lock/services/ad_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await MobileAds.instance.initialize();
+  
+  RequestConfiguration configuration = RequestConfiguration(
+    testDeviceIds: ["0A179F1EC44A88F71FAE4DE71E5217D0"],
+  );
+  MobileAds.instance.updateRequestConfiguration(configuration);
+
+  Get.put(AdService());
   await LocalData.init();
   CodeLockColor.isDark = LocalData.getIsDarkMode ?? true;
   

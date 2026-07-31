@@ -13,10 +13,14 @@ import 'package:code_lock/custom/colors/code_lock_color.dart';
 import 'package:code_lock/widget/code_lock_tetxtfield.dart';
 import 'package:code_lock/widget/code_lock_text.dart';
 import 'package:code_lock/widget/code_lock_toast.dart';
+import 'package:code_lock/services/ad_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:code_lock/services/ad_service.dart';
+import 'package:code_lock/widget/code_lock_banner_ad.dart';
 import 'field_screen_controller.dart';
 
 class FieldScreen extends StatefulWidget {
@@ -75,9 +79,12 @@ class _FieldScreenState extends State<FieldScreen> {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -395,6 +402,7 @@ class _FieldScreenState extends State<FieldScreen> {
                             msg: "Saved Successfully",
                           ),
                         );
+                        AdService.to.showInterstitialAd();
                         Get.back();
                       }
                     }
@@ -412,10 +420,18 @@ class _FieldScreenState extends State<FieldScreen> {
           ),
         ),
       ),
-    ),
+                ),
+              ),
+              Obx(() {
+                return AdService.to.isConfigReady.value
+                    ? const CodeLockBannerAd()
+                    : const SizedBox();
+              }),
+            ],
           ),
         ),
-  );
+      ),
+    );
   }
 }
 

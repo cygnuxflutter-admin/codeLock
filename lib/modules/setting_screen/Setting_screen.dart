@@ -14,6 +14,10 @@ import 'package:code_lock/modules/setting_screen/setting_screen_controller.dart'
 import 'package:code_lock/widget/code_lock_alertdialogbox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+import 'package:code_lock/services/ad_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Settingscreen extends StatefulWidget {
   Settingscreen({Key? key}) : super(key: key);
@@ -26,6 +30,24 @@ class Settingscreen extends StatefulWidget {
 
 class _SettingscreenState extends State<Settingscreen> {
   final SingletonTimer time = SingletonTimer();
+  String appVersion = '1.0.0';
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      setState(() {
+        appVersion = info.version; // e.g. "1.0.1"
+      });
+    } catch (e) {
+      debugPrint("Error fetching package info: $e");
+    }
+  }
 
   Widget _buildSectionTitle(String title) {
     return Padding(
@@ -92,6 +114,7 @@ class _SettingscreenState extends State<Settingscreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildSectionTitle("Security"),
+
                 SettingButton(
                   onTap: () {
                     detectOnTap();
@@ -310,6 +333,20 @@ class _SettingscreenState extends State<Settingscreen> {
                   iconcolor: CodeLockColor.white,
                   iconsize: 30,
                 ),
+                
+                const SizedBox(height: 30),
+                if (appVersion.isNotEmpty)
+                  Center(
+                    child: Text(
+                      "Version $appVersion",
+                      style: TextStyle(
+                        color: CodeLockColor.white.withOpacity(0.4),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

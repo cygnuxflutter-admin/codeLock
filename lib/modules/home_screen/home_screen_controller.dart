@@ -54,6 +54,7 @@ class HomeScreenController extends GetxController {
     Directory(folderPath).create(recursive: true);
   }
 
+  int _retryCatCount = 0;
   Future<void> getCatMainData() async {
     await _appDataBase.query(Tables.catMain).then((value) {
       catMainTable = value.map((map) => CatMainModel.fromMap(map)).toList();
@@ -63,17 +64,38 @@ class HomeScreenController extends GetxController {
         return bCount.compareTo(aCount);
       });
       catMainTableStreamController.add(catMainTable);
+      _changeStatus(Status.done); // Recover from error state
+      _retryCatCount = 0;
     }).catchError((error, stackTrace) {
-      _changeStatus(Status.error);
+      if (_retryCatCount < 2) {
+        _retryCatCount++;
+        Future.delayed(const Duration(milliseconds: 300), () => getCatMainData());
+      } else {
+        print("Error in getCatMainData: $error");
+        print(stackTrace);
+        _changeStatus(Status.error);
+        _retryCatCount = 0;
+      }
     });
   }
 
+  int _retryTitleCount = 0;
   Future<void> getTitleData() async {
     await _appDataBase.query(Tables.titles).then((value) {
       titles = value.map((map) => TitleModel.fromMap(map)).toList();
       catMainTableStreamController.add(catMainTable);
+      _changeStatus(Status.done); // Recover from error state
+      _retryTitleCount = 0;
     }).catchError((error, stackTrace) {
-      _changeStatus(Status.error);
+      if (_retryTitleCount < 2) {
+        _retryTitleCount++;
+        Future.delayed(const Duration(milliseconds: 300), () => getTitleData());
+      } else {
+        print("Error in getTitleData: $error");
+        print(stackTrace);
+        _changeStatus(Status.error);
+        _retryTitleCount = 0;
+      }
     });
   }
 

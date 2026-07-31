@@ -22,11 +22,27 @@
           }
         },
         {
+          "client_id": "72875354354-idtkv44f3q7lqslfsgicrba088ei0tjp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codelock.code_lock",
+            "certificate_hash": "62624f910e29d47235a3c15ab7eca412f07c002c"
+          }
+        },
+        {
           "client_id": "72875354354-skkg67lprhakggfthia1jeuhd53qusi9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.codelock.code_lock",
             "certificate_hash": "c10af980bafe7fa303c7f20ce154a4b0514170a5"
+          }
+        },
+        {
+          "client_id": "72875354354-tp09r4373vmv877cpr5uo0vq9urkt6e9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codelock.code_lock",
+            "certificate_hash": "f44894905f0edac8314fa3c7242d762c383f41bc"
           }
         },
         {

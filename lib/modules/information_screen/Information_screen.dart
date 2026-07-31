@@ -13,6 +13,7 @@ import 'package:code_lock/custom/colors/code_lock_color.dart';
 import 'package:code_lock/widget/code_lock_infocell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:code_lock/widget/code_lock_native_ad.dart';
 
 import 'package:code_lock/widget/code_lock_empty_state.dart';
 import 'package:code_lock/widget/code_lock_alertdialogbox.dart';
@@ -170,55 +171,65 @@ class InformationScreen extends GetView<InformationScreenController> {
                               SizedBox(height: context.getWidth * 0.03),
                       itemBuilder: (context, index) {
                         TitleModel data = controller.dataIn[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            onTap: () {
-                              detectOnTap();
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: GestureDetector(
+                                onTap: () {
+                                  detectOnTap();
 
-                              final updateCount = TitleModel(
-                                catId: data.catId,
-                                titleId: data.titleId,
-                                titleName: data.titleName,
-                                openedCount:
-                                    (int.parse(data.openedCount ?? '0') +
-                                            1)
-                                        .toString(),
-                              );
+                                  final updateCount = TitleModel(
+                                    catId: data.catId,
+                                    titleId: data.titleId,
+                                    titleName: data.titleName,
+                                    openedCount:
+                                        (int.parse(data.openedCount ?? '0') +
+                                                1)
+                                            .toString(),
+                                  );
 
-                              _appDataBase.updateTitleCount(
-                                  updateCount.toMap(),
-                                  Tables.titles,
-                                  data.titleId.toString());
+                                  _appDataBase.updateTitleCount(
+                                      updateCount.toMap(),
+                                      Tables.titles,
+                                      data.titleId.toString());
 
-                              Get.toNamed(
-                                AppRoutes.DescriptionScreen,
-                                arguments: {
-                                  'titleId': data.titleId,
-                                  'titleName': data.titleName,
-                                  'isEditMode': false
+                                  Get.toNamed(
+                                    AppRoutes.DescriptionScreen,
+                                    arguments: {
+                                      'titleId': data.titleId,
+                                      'titleName': data.titleName,
+                                      'isEditMode': false
+                                    },
+                                  );
                                 },
-                              );
-                            },
-                            child: InfoCell(
-                              TitleName: data.titleName.toString(),
-                              onEdit: () {
-                                detectOnTap();
-                                Get.toNamed(
-                                  AppRoutes.DescriptionScreen,
-                                  arguments: {
-                                    'titleId': data.titleId,
-                                    'titleName': data.titleName,
-                                    'isEditMode': true
+                                child: InfoCell(
+                                  TitleName: data.titleName.toString(),
+                                  onEdit: () {
+                                    detectOnTap();
+                                    Get.toNamed(
+                                      AppRoutes.DescriptionScreen,
+                                      arguments: {
+                                        'titleId': data.titleId,
+                                        'titleName': data.titleName,
+                                        'isEditMode': true
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              onDelete: () {
-                                detectOnTap();
-                                _showDeleteConfirmationDialog(context, data);
-                              },
+                                  onDelete: () {
+                                    detectOnTap();
+                                    _showDeleteConfirmationDialog(context, data);
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
+                            // Show ad after 3rd item, or at the end if list is smaller
+                            if (index == (controller.dataIn.length < 3 ? controller.dataIn.length - 1 : 2))
+                              const Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: CodeLockNativeAd(),
+                              ),
+                          ],
                         );
                       },
                     );

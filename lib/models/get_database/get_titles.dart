@@ -12,10 +12,10 @@ class TitleModel {
   });
 
   TitleModel.fromMap(Map<String, dynamic> map) {
-    catId = map['CAT_ID'];
-    titleId = map['TITLE_ID'];
-    titleName = map['TITLE_NAME'];
-    openedCount = map['OPENED_COUNT'];
+    catId = map['CAT_ID']?.toString();
+    titleId = map['TITLE_ID']?.toString();
+    titleName = map['TITLE_NAME']?.toString();
+    openedCount = map['OPENED_COUNT']?.toString();
   }
 
   Map<String, dynamic> toMap() {

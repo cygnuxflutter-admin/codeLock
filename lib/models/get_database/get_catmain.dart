@@ -12,10 +12,10 @@ class CatMainModel {
   });
 
   CatMainModel.fromMap(Map<String, dynamic> map) {
-    catId = map['CAT_ID'];
-    catName = map['CAT_NAME'];
-    imgId = map['CAT_IMG'];
-    openedCount = map['OPENED_COUNT'];
+    catId = map['CAT_ID']?.toString();
+    catName = map['CAT_NAME']?.toString();
+    imgId = map['CAT_IMG']?.toString();
+    openedCount = map['OPENED_COUNT']?.toString();
   }
 
   Map<String, dynamic> toMap() {

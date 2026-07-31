@@ -7,6 +7,7 @@ import 'package:code_lock/widget/code_lock_tost.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
+import 'package:code_lock/services/ad_service.dart';
 
 class MasterPasswordScreenController extends GetxController {
   TextEditingController password = TextEditingController();
@@ -20,6 +21,10 @@ class MasterPasswordScreenController extends GetxController {
     } else if (password.text == LocalData.getPasswordData) {
       Get.offAllNamed(AppRoutes.HomeScreen);
       time.startTimer();
+      if (AdService.to.wasInBackground) {
+        AdService.to.showAppOpenAdIfAvailable();
+        AdService.to.wasInBackground = false;
+      }
     } else {
       CodeLockToast(context, text: allLanguages!.wrongpassword);
     }
@@ -32,6 +37,10 @@ class MasterPasswordScreenController extends GetxController {
       CodeLockString.pas3 = '';
       time.startTimer();
       Get.offAllNamed(AppRoutes.HomeScreen);
+      if (AdService.to.wasInBackground) {
+        AdService.to.showAppOpenAdIfAvailable();
+        AdService.to.wasInBackground = false;
+      }
     } else {
       CodeLockToast(context, text: allLanguages!.wrongpassword);
     }

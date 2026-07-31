@@ -21,6 +21,9 @@ import 'package:code_lock/widget/code_lock_alertdialogbox.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:get/get.dart';
 
+import 'package:code_lock/services/ad_service.dart';
+import 'package:code_lock/widget/code_lock_banner_ad.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -120,6 +123,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea( // Keep content below AppBar
           child: Column(
             children: [
+              if (AdService.to.isAdsEnabled && AdService.to.bannerAdUnitId.isNotEmpty)
+                Obx(() => AdService.to.isConfigReady.value
+                    ? const CodeLockBannerAd()
+                    : const SizedBox.shrink()),
               SizedBox(height: context.getHeight * 0.02),
               Expanded(
                 child: Padding(

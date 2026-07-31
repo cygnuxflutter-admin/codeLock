@@ -22,7 +22,12 @@ import 'package:code_lock/widget/code_lock_timepicker.dart';
 import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:code_lock/widget/code_lock_banner_ad.dart';
+import 'package:code_lock/services/ad_service.dart';
 import 'Info_add_value_screen_controller.dart';
+
+import 'package:code_lock/services/ad_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Infoaddvalue extends GetView<InfoAddValueScreenController> {
   Infoaddvalue({Key? key}) : super(key: key);
@@ -75,6 +80,7 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+
                 Obx(
                   () {
                     switch (controller.status.value) {
@@ -281,6 +287,10 @@ class Infoaddvalue extends GetView<InfoAddValueScreenController> {
                                   Get.find<HomeScreenController>().getCatMainData();
                                   Get.find<HomeScreenController>().getTitleData();
                                 }
+                                
+                                // Show Interstitial Ad after saving
+                                AdService.to.showInterstitialAd();
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   snackBar(
                                     context: context,
