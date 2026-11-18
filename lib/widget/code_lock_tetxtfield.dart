@@ -17,7 +17,7 @@ class codeLockTextfield extends StatefulWidget {
     this.prefixWidget,
     this.onChanged,
     this.validator,
-    this.textColor = Colors.white,
+    this.textColor,
     this.isPassword = false,
   }) : super(key: key);
 
@@ -32,7 +32,7 @@ class codeLockTextfield extends StatefulWidget {
   final Widget? prefixWidget;
   final void Function(String value)? onChanged;
   final String? Function(String?)? validator;
-  final Color textColor;
+  final Color? textColor;
   final bool isPassword;
 
   @override
@@ -41,11 +41,21 @@ class codeLockTextfield extends StatefulWidget {
 
 class _codeLockTextfieldState extends State<codeLockTextfield> {
   bool _obscureText = false;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
+    _focusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,35 +72,30 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  height: 64,
                   decoration: BoxDecoration(
                     color: CodeLockColor.glassBg,
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.glassBorder,
-                      width: state.hasError ? 1.5 : 1.2,
+                      color: state.hasError 
+                          ? const Color(0xFFFF6B6B) 
+                          : (_focusNode.hasFocus ? CodeLockColor.accentVibrant : CodeLockColor.glassBorder),
+                      width: state.hasError || _focusNode.hasFocus ? 1.5 : 1.2,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.accentVibrant,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(18),
-                              bottomLeft: Radius.circular(18)),
-                        ),
-                        width: 4.5,
-                        ),
                       if (widget.prefixWidget != null) ...[
+                        SizedBox(width: context.getWidth * 0.02),
                         widget.prefixWidget!,
                       ] else ...[
                         SizedBox(width: context.getWidth * 0.04),
                       ],
                       Expanded(
                         child: TextField(
+                          focusNode: _focusNode,
                           textAlignVertical: TextAlignVertical.center,
                           controller: widget.controller,
                           keyboardType: widget.keyboardType,
@@ -99,42 +104,44 @@ class _codeLockTextfieldState extends State<codeLockTextfield> {
                             state.didChange(val);
                             if (widget.onChanged != null) widget.onChanged!(val);
                           },
-                  obscureText: _obscureText,
-                  style: TextStyle(
-                      color: widget.textColor,
-                      fontSize: 16.0,
-                      fontFamily: "Inter"),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: widget.hintText,
-                    hintStyle: TextStyle(
-                        color: widget.HinttextColor.withOpacity(0.5),
-                        fontSize: 16.0,
-                        fontFamily: "Inter"),
-                    suffixIcon: widget.isPassword
-                        ? IconButton(
-                            icon: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
-                              color: widget.HinttextColor,
-                              size: 22,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          )
-                        : (widget.iconButton ?? const SizedBox()),
+                          obscureText: _obscureText,
+                          style: TextStyle(
+                              color: widget.textColor ?? CodeLockColor.white,
+                              fontSize: 16.0,
+                              fontFamily: "Inter"),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                            border: InputBorder.none,
+                            hintText: widget.hintText,
+                            hintStyle: TextStyle(
+                                color: widget.HinttextColor.withOpacity(0.5),
+                                fontSize: 16.0,
+                                fontFamily: "Inter"),
+                            suffixIcon: widget.isPassword
+                                ? IconButton(
+                                    icon: Icon(
+                                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                                      color: widget.HinttextColor,
+                                      size: 22,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  )
+                                : (widget.iconButton ?? const SizedBox()),
+                          ),
+                        ),
+                      ),
+                      if (!widget.isPassword && widget.iconButton == null)
+                        SizedBox(width: context.getWidth * 0.03),
+                    ],
                   ),
                 ),
               ),
-              if (!widget.isPassword && widget.iconButton == null)
-                SizedBox(width: context.getWidth * 0.03),
-            ],
+            ),
           ),
-        ),
-      ),
-    ),
     if (state.hasError)
       Padding(
         padding: const EdgeInsets.only(top: 8.0, left: 8.0),

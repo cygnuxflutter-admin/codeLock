@@ -27,17 +27,27 @@ class DataBaseHelper {
   }
 
   Future<Database> _initDataBase() async {
-    Directory getDataBasesDir = await getApplicationDocumentsDirectory();
-    String dataBasePath = join("${getDataBasesDir.path}/app_data", 'Pocket.sqlite');
-    ByteData data = await rootBundle.load('assets/Pocket.sqlite');
-    if (!await databaseExists(dataBasePath)) {
-      List<int> bytes = data.buffer.asUint8List(
-        data.offsetInBytes,
-        data.lengthInBytes,
-      );
-      await File(dataBasePath).writeAsBytes(bytes, flush: true);
+    try {
+      Directory getDataBasesDir = await getApplicationDocumentsDirectory();
+      String dataBasePath = join("${getDataBasesDir.path}/app_data", 'Pocket.sqlite');
+      print("Database Path: $dataBasePath");
+      
+      if (!await databaseExists(dataBasePath)) {
+        print("Database does not exist, copying from assets...");
+        ByteData data = await rootBundle.load('assets/Pocket.sqlite');
+        List<int> bytes = data.buffer.asUint8List(
+          data.offsetInBytes,
+          data.lengthInBytes,
+        );
+        await File(dataBasePath).writeAsBytes(bytes, flush: true);
+        print("Database copied successfully.");
+      } else {
+        print("Database already exists.");
+      }
       return openDatabase(dataBasePath);
+    } catch (e) {
+      print("Error initializing database: $e");
+      rethrow;
     }
-    return openDatabase(dataBasePath);
   }
 }

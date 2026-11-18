@@ -51,6 +51,9 @@ class _ImageContainerState extends State<ImageContainer> {
               XFile? image = await picker.pickImage(
                 source: ImageSource.gallery,
                 preferredCameraDevice: CameraDevice.rear,
+                imageQuality: 60,
+                maxWidth: 1200,
+                maxHeight: 1200,
               );
 
               if (image == null) return;

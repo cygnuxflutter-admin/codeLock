@@ -11,12 +11,14 @@ class DatePicker extends StatefulWidget {
     this.controller,
     required this.titleText,
     required this.hintText,
+    this.validator,
     this.enabled,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final String titleText;
   final String hintText;
+  final String? Function(String?)? validator;
   bool? enabled;
 
   @override
@@ -28,37 +30,42 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.titleText,
-            style: TextStyle(
-              fontSize: 16, 
-              fontWeight: FontWeight.w500,
-              color: CodeLockColor.white.withOpacity(0.9),
-            ),
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                height: context.getHeight * 0.065,
-                decoration: BoxDecoration(
-                  color: CodeLockColor.glassBg,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: CodeLockColor.glassBorder,
-                    width: 1.2,
-                  ),
+      child: FormField<String>(
+        initialValue: widget.controller?.text,
+        validator: widget.validator,
+        builder: (FormFieldState<String> state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.titleText,
+                style: TextStyle(
+                  fontSize: 16, 
+                  fontWeight: FontWeight.w500,
+                  color: CodeLockColor.white.withOpacity(0.9),
                 ),
-                child: Row(
+              ),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: CodeLockColor.glassBg,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.glassBorder,
+                        width: state.hasError ? 1.5 : 1.2,
+                      ),
+                    ),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: CodeLockColor.accentVibrant,
+                        color: state.hasError ? const Color(0xFFFF6B6B) : CodeLockColor.accentVibrant,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(12),
                           bottomLeft: Radius.circular(12),
@@ -69,6 +76,7 @@ class _DatePickerState extends State<DatePicker> {
                     SizedBox(width: context.getWidth * 0.04),
                     Expanded(
                       child: TextField(
+                        textAlignVertical: TextAlignVertical.center,
                         controller: widget.controller,
                         cursorColor: CodeLockColor.accentVibrant,
                         enabled: widget.enabled,
@@ -82,6 +90,7 @@ class _DatePickerState extends State<DatePicker> {
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onChanged: detectOnTap(),
                         readOnly: true,
@@ -94,28 +103,37 @@ class _DatePickerState extends State<DatePicker> {
                             lastDate: DateTime(2101),
                             builder: (BuildContext context, Widget? child) {
                               return Theme(
-                                data: ThemeData.dark().copyWith( // Dark theme picker
-                                  colorScheme: ColorScheme.dark(
-                                    primary: CodeLockColor.accentVibrant,
-                                    secondary: CodeLockColor.accentVibrant,
-                                    tertiary: CodeLockColor.accentVibrant,
-                                    onPrimary: Colors.white,
-                                    surface: CodeLockColor.bgGradientStart,
-                                    onSurface: Colors.white,
-                                  ),
-                                  dialogBackgroundColor: CodeLockColor.bgGradientEnd,
-                                ),
+                                data: CodeLockColor.isDark 
+                                  ? ThemeData.dark().copyWith(
+                                      colorScheme: ColorScheme.dark(
+                                        primary: CodeLockColor.accentVibrant,
+                                        onPrimary: Colors.white,
+                                        surface: CodeLockColor.bgGradientStart,
+                                        onSurface: Colors.white,
+                                      ),
+                                      dialogBackgroundColor: CodeLockColor.bgGradientEnd,
+                                    )
+                                  : ThemeData.light().copyWith(
+                                      colorScheme: ColorScheme.light(
+                                        primary: CodeLockColor.accentVibrant,
+                                        onPrimary: Colors.white,
+                                        surface: CodeLockColor.bgGradientStart,
+                                        onSurface: Colors.black,
+                                      ),
+                                      dialogBackgroundColor: CodeLockColor.bgGradientEnd,
+                                    ),
                                 child: child!,
                               );
                             },
                           );
 
-                          if (pickedDate != null) {
-                            String formattedDate = DateFormat('dd-MMM-yyyy').format(pickedDate);
-                            setState(() {
-                              widget.controller!.text = formattedDate;
-                            });
-                          }
+                            if (pickedDate != null) {
+                              String formattedDate = DateFormat('dd-MMM-yyyy').format(pickedDate);
+                              setState(() {
+                                widget.controller!.text = formattedDate;
+                              });
+                              state.didChange(formattedDate);
+                            }
                         },
                       ),
                     ),
@@ -129,8 +147,23 @@ class _DatePickerState extends State<DatePicker> {
               ),
             ),
           ),
+        ),
+          if (state.hasError)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+              child: Text(
+                state.errorText!,
+                style: const TextStyle(
+                  color: Color(0xFFFF6B6B),
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
         ],
-      ),
+      );
+    },
+    ),
     );
   }
 }

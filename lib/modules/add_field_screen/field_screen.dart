@@ -1,19 +1,26 @@
+import 'package:code_lock/app_database/app_database.dart';
+import 'package:code_lock/widget/code_lock_toast.dart';
 import 'package:code_lock/app_routes.dart';
-import 'package:code_lock/modules/Home Screen/home_screen_controller.dart' hide Status;
+import 'package:code_lock/modules/home_screen/home_screen_controller.dart' hide Status;
 import 'package:code_lock/custom/detectTimer.dart';
 import 'package:code_lock/custom/extension/extension.dart';
 import 'package:code_lock/custom/image/code_lock_image.dart';
 import 'package:code_lock/custom/string/code_lock_string.dart';
-import 'package:code_lock/models/insert%20Database/cat_main_insert.dart';
-import 'package:code_lock/models/insert%20Database/sub_cat_insert.dart';
+import 'package:code_lock/models/insert_database/cat_main_insert.dart';
+import 'package:code_lock/models/insert_database/sub_cat_insert.dart';
 import 'package:code_lock/modules/language_select/language_screen_controller.dart';
 import 'package:code_lock/custom/colors/code_lock_color.dart';
 import 'package:code_lock/widget/code_lock_tetxtfield.dart';
 import 'package:code_lock/widget/code_lock_text.dart';
 import 'package:code_lock/widget/code_lock_toast.dart';
+import 'package:code_lock/services/ad_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:code_lock/services/ad_service.dart';
+import 'package:code_lock/widget/code_lock_banner_ad.dart';
 import 'field_screen_controller.dart';
 
 class FieldScreen extends StatefulWidget {
@@ -38,10 +45,10 @@ class _FieldScreenState extends State<FieldScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
           child: GestureDetector(
-            child: const ImageIcon(
-              AssetImage(CodeLockImages.back), 
+            child: ImageIcon(
+              const AssetImage(CodeLockImages.back), 
               size: 18, 
-              color: Colors.white,
+              color: CodeLockColor.white,
             ),
             onTap: () {
               detectOnTap();
@@ -51,32 +58,12 @@ class _FieldScreenState extends State<FieldScreen> {
           ),
         ),
         centerTitle: true,
-        title: const ImageIcon(
-          AssetImage(CodeLockImages.names), 
+        title: ImageIcon(
+          const AssetImage(CodeLockImages.names), 
           size: 120,
-          color: Colors.white,
+          color: CodeLockColor.white,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add, color: Colors.white, size: 28),
-            onPressed: () {
-              setState(() {
-                detectOnTap();
-                if (_formKey.currentState!.validate()) {
-                  controller.multipleField.add(
-                    CustomFieldController(
-                      controller: TextEditingController(),
-                      keyboardTye: TextInputType.text,
-                      fieldController: controller,
-                      selectedIndex: 0,
-                    ),
-                  );
-                }
-              });
-            },
-          ),
-          const SizedBox(width: 8),
-        ],
+        actions: const [],
       ),
       body: Container(
         width: double.infinity,
@@ -92,9 +79,12 @@ class _FieldScreenState extends State<FieldScreen> {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -222,7 +212,7 @@ class _FieldScreenState extends State<FieldScreen> {
                                                         child: Image(
                                                           height: 32,
                                                           width: 32,
-                                                          color: Colors.white,
+                                                          color: CodeLockColor.white,
                                                           image: AssetImage(controller.images[index]),
                                                         ),
                                                       ),
@@ -269,7 +259,7 @@ class _FieldScreenState extends State<FieldScreen> {
                             () => Image(
                               height: 28,
                               width: 28,
-                              color: Colors.white,
+                              color: CodeLockColor.white,
                               image: AssetImage(
                                 controller.images[controller.Index.value],
                               ),
@@ -291,14 +281,65 @@ class _FieldScreenState extends State<FieldScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 14),
                     child: CustomTextField(
+                      index: index,
                       customFieldController: element,
                       onSelectKeyBoardType: (int value) {
                         element.selectedIndex = value;
+                      },
+                      onDelete: () {
+                        detectOnTap();
+                        setState(() {
+                          controller.multipleField.removeAt(index);
+                        });
                       },
                     ),
                   );
                 },
               ),
+              const SizedBox(height: 10),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  splashColor: CodeLockColor.accentVibrant.withOpacity(0.3),
+                  highlightColor: CodeLockColor.accentVibrant.withOpacity(0.1),
+                  onTap: () {
+                    setState(() {
+                      detectOnTap();
+                      if (_formKey.currentState!.validate()) {
+                        controller.multipleField.add(
+                          CustomFieldController(
+                            controller: TextEditingController(),
+                            keyboardTye: TextInputType.text,
+                            fieldController: controller,
+                            selectedIndex: 0,
+                          ),
+                        );
+                      }
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min, // To keep ripple only around content if needed, but since it's in a column it might take full width. Using MainAxisSize.min for Row is good.
+                      children: [
+                        Icon(Icons.add_circle_outline, color: CodeLockColor.white, size: 24),
+                        const SizedBox(width: 10),
+                        Text(
+                          allLanguages!.addNewField,
+                          style: TextStyle(
+                            color: CodeLockColor.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Divider(color: CodeLockColor.glassBorder, height: 1),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
@@ -346,16 +387,22 @@ class _FieldScreenState extends State<FieldScreen> {
                             subId: 'F_${DateTime.now().microsecondsSinceEpoch}',
                             subFieldType: element.selectedIndex,
                             subName: element.controller.text,
-                            isMandatory: 0,
+                            isMandatory: element.isMandatory,
                           );
                           subCategoryData.insertSubCatData();
                         }
 
-                        //after insertion
                         if (Get.isRegistered<HomeScreenController>()) {
                           Get.find<HomeScreenController>().getCatMainData();
                           Get.find<HomeScreenController>().getTitleData();
                         }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          snackBar(
+                            context: context,
+                            msg: "Saved Successfully",
+                          ),
+                        );
+                        AdService.to.showInterstitialAd();
                         Get.back();
                       }
                     }
@@ -364,6 +411,7 @@ class _FieldScreenState extends State<FieldScreen> {
                     text: allLanguages!.save,
                     fontsize: 18,
                     fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -372,22 +420,34 @@ class _FieldScreenState extends State<FieldScreen> {
           ),
         ),
       ),
-    ),
+                ),
+              ),
+              Obx(() {
+                return AdService.to.isConfigReady.value
+                    ? const CodeLockBannerAd()
+                    : const SizedBox();
+              }),
+            ],
           ),
         ),
-  );
+      ),
+    );
   }
 }
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     Key? key,
+    required this.index,
     required this.customFieldController,
     required this.onSelectKeyBoardType,
+    required this.onDelete,
   }) : super(key: key);
 
+  final int index;
   final CustomFieldController customFieldController;
   final void Function(int value) onSelectKeyBoardType;
+  final VoidCallback onDelete;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -404,8 +464,33 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 4, bottom: 8),
+                child: CodeLockText(
+                  text: "Field ${widget.index + 1}",
+                  fontsize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: CodeLockColor.white,
+                ),
+              ),
+              GestureDetector(
+                onTap: widget.onDelete,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: const Color(0xFFFF4D4F),
+                    size: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 8),
+            padding: const EdgeInsets.only(left: 4, bottom: 8, top: 4),
             child: CodeLockText(
               text: allLanguages!.fieldName,
               fontsize: 14,
@@ -433,7 +518,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 8),
             child: CodeLockText(
-              text: "Data Type",
+              text: allLanguages!.typeDefine,
               fontsize: 14,
               fontWeight: FontWeight.w600,
               color: CodeLockColor.white.withOpacity(0.7),
@@ -473,7 +558,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         const SizedBox(height: 16),
                         // Title
                         CodeLockText(
-                          text: allLanguages!.fieldName, // Translates to "Field Name" / "Data Type"
+                          text: allLanguages!.typeDefine, 
                           fontsize: 18,
                           fontWeight: FontWeight.w600,
                           color: CodeLockColor.white,
@@ -579,11 +664,13 @@ class CustomFieldController {
   final TextInputType keyboardTye;
   final FieldScreenController fieldController;
   int selectedIndex;
+  int isMandatory;
 
   CustomFieldController({
     required this.controller,
     required this.keyboardTye,
     this.selectedIndex = 0,
+    this.isMandatory = 0,
     required this.fieldController,
   });
 }

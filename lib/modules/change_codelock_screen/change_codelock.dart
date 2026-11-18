@@ -24,6 +24,12 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        centerTitle: true,
+        title: ImageIcon(
+          const AssetImage(CodeLockImages.names), 
+          size: 120,
+          color: CodeLockColor.white,
+        ),
         leading: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
@@ -33,10 +39,10 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
             width: 48,
             height: 48,
             alignment: Alignment.center,
-            child: const ImageIcon(
-              AssetImage(CodeLockImages.back),
+            child: ImageIcon(
+              const AssetImage(CodeLockImages.back),
               size: 24,
-              color: Colors.white,
+              color: CodeLockColor.white,
             ),
           ),
         ),
@@ -67,21 +73,37 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                     width: context.getWidth * 0.32, // Reduced by 20%
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    allLanguages!.changeCodelock,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: CodeLockColor.white,
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "${allLanguages!.changeCodelock.split(" ").first} ",
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: CodeLockColor.accentVibrant,
+                          ),
+                        ),
+                        TextSpan(
+                          text: allLanguages!.changeCodelock.split(" ").skip(1).join(" "),
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: CodeLockColor.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Create a new secure 4-digit passcode",
+                  Text(
+                    LocalData.getIsPass == true
+                        ? "Create a new secure password"
+                        : "Create a new secure 4-digit passcode",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white70,
+                      color: CodeLockColor.white.withOpacity(0.7),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -99,7 +121,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                   hintText: allLanguages!.OldPassword,
                                   firstColor: CodeLockColor.white,
                                   SecondColor: CodeLockColor.gray,
-                                  HinttextColor: CodeLockColor.darkblue,
+                                  HinttextColor: CodeLockColor.hinttext,
                                   cursorColor: CodeLockColor.white,
                                   onChanged: detectOnTap(),
                                   validator: (value) {
@@ -122,7 +144,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                   hintText: allLanguages!.newpassword,
                                   firstColor: CodeLockColor.white,
                                   SecondColor: CodeLockColor.gray,
-                                  HinttextColor: CodeLockColor.darkblue,
+                                  HinttextColor: CodeLockColor.hinttext,
                                   cursorColor: CodeLockColor.white,
                                   onChanged: detectOnTap(),
                                   validator: (value) {
@@ -142,7 +164,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                   hintText: allLanguages!.confirmPassword,
                                   firstColor: CodeLockColor.white,
                                   SecondColor: CodeLockColor.gray,
-                                  HinttextColor: CodeLockColor.darkblue,
+                                  HinttextColor: CodeLockColor.hinttext,
                                   cursorColor: CodeLockColor.white,
                                   onChanged: detectOnTap(),
                                   validator: (value) {
@@ -208,13 +230,17 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                           key: controller.formKeyPasscode,
                           child: Column(
                             children: [
-                              Center(
-                                child: Text(
-                                  allLanguages!.oldpasscode,
-                                  style: TextStyle(
-                                    color: CodeLockColor.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Text(
+                                    allLanguages!.oldpasscode,
+                                    style: TextStyle(
+                                      color: CodeLockColor.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -243,7 +269,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                               fieldWidth: 64,
                                               fieldStyle: FieldStyle.box,
                                               outlineBorderRadius: 16,
-                                              style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                                              style: TextStyle(fontSize: 22, color: CodeLockColor.white, fontWeight: FontWeight.bold),
                                               otpFieldStyle: OtpFieldStyle(
                                                 disabledBorderColor: CodeLockColor.glassBorder,
                                                 focusBorderColor: CodeLockColor.accentVibrant,
@@ -276,13 +302,17 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                 ),
                               ),
                               const SizedBox(height: 28),
-                              Center(
-                                child: Text(
-                                  allLanguages!.newpasscode,
-                                  style: TextStyle(
-                                    color: CodeLockColor.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Text(
+                                    allLanguages!.newpasscode,
+                                    style: TextStyle(
+                                      color: CodeLockColor.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -309,7 +339,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                               fieldWidth: 64,
                                               fieldStyle: FieldStyle.box,
                                               outlineBorderRadius: 16,
-                                              style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                                              style: TextStyle(fontSize: 22, color: CodeLockColor.white, fontWeight: FontWeight.bold),
                                               otpFieldStyle: OtpFieldStyle(
                                                 disabledBorderColor: CodeLockColor.glassBorder,
                                                 focusBorderColor: CodeLockColor.accentVibrant,
@@ -342,13 +372,17 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                 ),
                               ),
                               const SizedBox(height: 28),
-                              Center(
-                                child: Text(
-                                  allLanguages!.confirmPasscode,
-                                  style: TextStyle(
-                                    color: CodeLockColor.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Text(
+                                    allLanguages!.confirmPasscode,
+                                    style: TextStyle(
+                                      color: CodeLockColor.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -375,7 +409,7 @@ class ChangeCodeLockScreen extends GetView<ChangeCodeLockScreenController> {
                                               fieldWidth: 64,
                                               fieldStyle: FieldStyle.box,
                                               outlineBorderRadius: 16,
-                                              style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                                              style: TextStyle(fontSize: 22, color: CodeLockColor.white, fontWeight: FontWeight.bold),
                                               otpFieldStyle: OtpFieldStyle(
                                                 disabledBorderColor: CodeLockColor.glassBorder,
                                                 focusBorderColor: CodeLockColor.accentVibrant,

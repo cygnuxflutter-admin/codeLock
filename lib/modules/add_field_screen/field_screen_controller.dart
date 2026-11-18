@@ -32,14 +32,17 @@ class FieldScreenController extends GetxController {
   ].obs;
 
   List<String> samples = [
-    "123",
-    "ABC-XYZ",
-    "***********",
-    "YES/NO",
-    "+1-541-754-3010",
-    "IMAGE",
-    "12-DEC-1995",
-    "12:55 AM",
+    "🔢  Number",
+    "📝  Text",
+    "🔒  Password",
+    "☑️  Yes / No",
+    "📞  Phone Number",
+    "🖼️  Image",
+    "📅  Date",
+    "🕒  Time",
+    "📧  Email",
+    "🌐  URL / Website",
+    "📄  Notes (Multi-line)",
   ];
 
   String getReturnValue(index) {

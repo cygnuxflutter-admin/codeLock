@@ -12,4 +12,5 @@ class AppRoutes {
   static String DescriptionScreen = '/DescriptionScreen';
   static String DisclaimerScreen = '/DisclaimerScreen';
   static String restoreScreen = '/restoreScreen';
+  static String EditFieldScreen = '/EditFieldScreen';
 }
